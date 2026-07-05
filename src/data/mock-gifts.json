@@ -1,0 +1,62 @@
+[
+  {
+    "id": "gft_001",
+    "title": "香氛礼盒（治愈系）",
+    "brand": "观夏",
+    "image": "/assets/gift-scent.png",
+    "price_fen": 19900,
+    "price_text": "¥199 起 ¥23.8",
+    "match_score": 95,
+    "relation_tags": ["同事", "生日"],
+    "reason": "适合同事，不过分亲昵",
+    "category": "香薰"
+  },
+  {
+    "id": "gft_002",
+    "title": "永生花香氛盒",
+    "brand": "野兽派",
+    "image": "/assets/gift-forever.png",
+    "price_fen": 16800,
+    "price_text": "¥168",
+    "match_score": 88,
+    "relation_tags": ["闺蜜", "生日"],
+    "reason": "浪漫不轻浮，意境不俗",
+    "category": "永生花"
+  },
+  {
+    "id": "gft_003",
+    "title": "小众香水礼盒",
+    "brand": "BYREDO",
+    "image": "/assets/gift-perfume.png",
+    "price_fen": 18900,
+    "price_text": "¥189",
+    "match_score": 82,
+    "relation_tags": ["闺蜜", "节日"],
+    "reason": "小众不撞香，是真喜欢",
+    "category": "礼盒"
+  },
+  {
+    "id": "gft_004",
+    "title": "母亲节健康礼盒",
+    "brand": "同仁堂",
+    "image": "/assets/gift-mom.png",
+    "price_fen": 26800,
+    "price_text": "¥268",
+    "match_score": 90,
+    "relation_tags": ["长辈", "母亲节"],
+    "reason": "心意实在，长辈看得见",
+    "category": "礼盒"
+  },
+  {
+    "id": "gft_005",
+    "title": "送同事生日礼物 香氛礼盒",
+    "brand": "观夏",
+    "image": "/assets/gift-cover-demo.png",
+    "price_fen": 86030,
+    "price_text": "¥860.30",
+    "match_score": 92,
+    "relation_tags": ["同事", "生日"],
+    "reason": "好闻又体面，200 内拿得下",
+    "category": "香薰"
+  }
+]

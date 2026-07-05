@@ -1,0 +1,51 @@
+.gp-plan-row {
+  display: flex;
+  align-items: stretch;
+  background-color: var(--brand-bg-card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  margin-bottom: var(--sp-3);
+  overflow: hidden;
+}
+
+.gp-plan-row__date {
+  width: 60px;
+  background: linear-gradient(160deg, var(--brand-green), var(--brand-apricot));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: var(--fs-title);
+}
+
+.gp-plan-row__body {
+  flex: 1;
+  padding: var(--sp-3) var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.gp-plan-row__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gp-plan-row__scene {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--brand-ink);
+}
+
+.gp-plan-row__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+
+.gp-plan-row__meta-item {
+  font-size: var(--fs-caption);
+  color: var(--brand-muted);
+}

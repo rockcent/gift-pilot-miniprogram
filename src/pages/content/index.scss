@@ -1,0 +1,32 @@
+.gp-page__suggest {
+  background-color: var(--brand-bg-card);
+  border-radius: var(--radius-card);
+  padding: var(--sp-4);
+  margin: var(--sp-3) var(--sp-4);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.gp-page__suggest-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.gp-page__suggest-text {
+  font-size: var(--fs-body);
+  color: var(--brand-ink);
+  font-weight: 500;
+}
+
+.gp-page__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.gp-page__list {
+  padding: 0 var(--sp-4);
+}

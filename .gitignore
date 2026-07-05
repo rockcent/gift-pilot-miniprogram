@@ -1,0 +1,29 @@
+# 依赖
+node_modules/
+dist/
+.taro/
+
+# 环境 / 密钥
+.env
+.env.local
+.env.production
+project.config.json
+project.private.config.json
+*.key
+*.pem
+
+# 系统
+.DS_Store
+.idea/
+.vscode/
+*.log
+
+# 测试
+coverage/
+
+# Lockfile（pnp）
+.pnpm-store/
+
+# 临时
+tmp/
+.cache/

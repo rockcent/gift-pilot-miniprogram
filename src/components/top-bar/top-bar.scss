@@ -1,0 +1,24 @@
+.gp-topbar {
+  padding: var(--sp-3) var(--sp-4);
+  background-color: var(--brand-bg);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--brand-line);
+}
+
+.gp-topbar__title-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.gp-topbar__title {
+  font-size: var(--fs-title);
+  font-weight: 600;
+  color: var(--brand-ink);
+}
+
+.gp-topbar__sub {
+  font-size: var(--fs-caption);
+  color: var(--brand-muted);
+  margin-top: var(--sp-1);
+}

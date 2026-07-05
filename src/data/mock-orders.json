@@ -1,0 +1,48 @@
+[
+  {
+    "id": "GP202605121001",
+    "publish_id": "pub_001",
+    "gift_id": "gft_001",
+    "amount_fen": 19900,
+    "commission_fen": 5960,
+    "status": "PAID",
+    "created_at": 1747056000000,
+    "paid_at": 1747056600000,
+    "closed_at": null,
+    "buyer_note": "同事生日"
+  },
+  {
+    "id": "GP202605151002",
+    "publish_id": "pub_002",
+    "gift_id": "gft_002",
+    "amount_fen": 16800,
+    "commission_fen": 5040,
+    "status": "CLOSED",
+    "created_at": 1747315200000,
+    "paid_at": 1747315800000,
+    "closed_at": 1747401600000,
+    "buyer_note": "闺蜜礼物"
+  },
+  {
+    "id": "GP202605201003",
+    "publish_id": null,
+    "gift_id": "gft_003",
+    "amount_fen": 18900,
+    "commission_fen": 5660,
+    "status": "PAID",
+    "created_at": 1747747200000,
+    "paid_at": 1747747800000,
+    "closed_at": null
+  },
+  {
+    "id": "GP202605261004",
+    "publish_id": null,
+    "gift_id": "gft_004",
+    "amount_fen": 26800,
+    "commission_fen": 8040,
+    "status": "CREATED",
+    "created_at": 1748265600000,
+    "paid_at": null,
+    "closed_at": null
+  }
+]

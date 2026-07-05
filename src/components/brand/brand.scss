@@ -1,0 +1,58 @@
+.gp-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.gp-brand--sm {
+  gap: var(--sp-2);
+}
+
+.gp-brand__logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--brand-green), var(--brand-apricot));
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gp-brand--sm .gp-brand__logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+}
+
+.gp-brand__logo::after {
+  content: '🎁';
+  font-size: 18px;
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.3));
+}
+
+.gp-brand__title {
+  display: block;
+  font-size: var(--fs-title);
+  font-weight: 600;
+  color: var(--brand-ink);
+  line-height: 1.2;
+}
+
+.gp-brand--sm .gp-brand__title {
+  font-size: var(--fs-body);
+}
+
+.gp-brand__sub {
+  display: block;
+  font-size: var(--fs-mini);
+  color: var(--brand-muted);
+  letter-spacing: 0.5px;
+}
+
+.gp-brand__slogan {
+  margin-left: auto;
+  font-size: var(--fs-caption);
+  color: var(--brand-muted);
+  max-width: 50%;
+  text-align: right;
+}

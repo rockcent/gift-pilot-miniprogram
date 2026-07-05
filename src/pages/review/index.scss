@@ -1,0 +1,48 @@
+.gp-page__header {
+  padding: var(--sp-4);
+}
+
+.gp-page__row-3, .gp-page__row-4 {
+  display: flex;
+  gap: var(--sp-2);
+  padding: 0 var(--sp-4) var(--sp-3);
+}
+
+.gp-page__row-3 .gp-metric, .gp-page__row-4 .gp-metric {
+  flex: 1;
+}
+
+.gp-page__section {
+  background-color: var(--brand-bg-card);
+  border-radius: var(--radius-card);
+  padding: var(--sp-4);
+  margin: var(--sp-3) var(--sp-4);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.gp-page__bullet {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-body);
+  color: var(--brand-ink);
+}
+
+.gp-page__bullet-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--brand-green);
+  flex-shrink: 0;
+}
+
+.gp-page__chip {
+  background-color: rgba(35, 178, 109, 0.08);
+  color: var(--brand-green);
+  font-size: var(--fs-body);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius-mini);
+}

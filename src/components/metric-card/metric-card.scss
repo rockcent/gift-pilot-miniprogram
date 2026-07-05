@@ -1,0 +1,31 @@
+.gp-metric {
+  background-color: var(--brand-bg-card);
+  border-radius: var(--radius-card);
+  padding: var(--sp-3) var(--sp-4);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  min-width: 0;
+}
+
+.gp-metric--green .gp-metric__value { color: var(--brand-green); }
+.gp-metric--apricot .gp-metric__value { color: #B0701F; }
+.gp-metric--coral .gp-metric__value { color: var(--brand-coral); }
+.gp-metric--ink .gp-metric__value { color: var(--brand-ink); }
+
+.gp-metric__label {
+  font-size: var(--fs-caption);
+  color: var(--brand-muted);
+}
+
+.gp-metric__value {
+  font-size: var(--fs-title);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.gp-metric__hint {
+  font-size: var(--fs-mini);
+  color: var(--brand-muted);
+}

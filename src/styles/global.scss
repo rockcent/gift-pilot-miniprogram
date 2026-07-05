@@ -1,0 +1,124 @@
+page {
+  background-color: var(--brand-bg);
+  color: var(--brand-ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  box-sizing: border-box;
+}
+
+view, text {
+  box-sizing: border-box;
+}
+
+.gp-card {
+  background-color: var(--brand-bg-card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--sp-4);
+}
+
+.gp-pill {
+  border-radius: var(--radius-pill);
+  padding: var(--sp-1) var(--sp-3);
+  font-size: var(--fs-caption);
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.4;
+}
+
+.gp-pill--green {
+  background-color: rgba(35, 178, 109, 0.12);
+  color: var(--brand-green);
+}
+
+.gp-pill--apricot {
+  background-color: rgba(246, 201, 141, 0.30);
+  color: #8B5A1F;
+}
+
+.gp-pill--coral {
+  background-color: rgba(244, 124, 108, 0.15);
+  color: var(--brand-coral);
+}
+
+.gp-pill--ink {
+  background-color: var(--brand-line);
+  color: var(--brand-ink);
+}
+
+.gp-btn {
+  border-radius: var(--radius-pill);
+  padding: var(--sp-3) var(--sp-5);
+  font-size: var(--fs-body);
+  font-weight: 500;
+  text-align: center;
+  border: none;
+  outline: none;
+}
+
+.gp-btn--primary {
+  background-color: var(--brand-green);
+  color: #fff;
+}
+
+.gp-btn--ghost {
+  background-color: var(--brand-bg-card);
+  color: var(--brand-green);
+  border: 1px solid var(--brand-green);
+}
+
+.gp-btn--ink {
+  background-color: var(--brand-ink);
+  color: #fff;
+}
+
+.gp-h1 {
+  font-size: var(--fs-display);
+  font-weight: 600;
+  color: var(--brand-ink);
+  line-height: 1.3;
+}
+
+.gp-h2 {
+  font-size: var(--fs-title);
+  font-weight: 600;
+  color: var(--brand-ink);
+  line-height: 1.4;
+}
+
+.gp-caption {
+  font-size: var(--fs-caption);
+  color: var(--brand-muted);
+}
+
+.gp-mini {
+  font-size: var(--fs-mini);
+  color: var(--brand-muted);
+}
+
+.gp-row {
+  display: flex;
+  align-items: center;
+}
+
+.gp-row--between {
+  justify-content: space-between;
+}
+
+.gp-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.gp-gap-1 { gap: var(--sp-1); }
+.gp-gap-2 { gap: var(--sp-2); }
+.gp-gap-3 { gap: var(--sp-3); }
+.gp-gap-4 { gap: var(--sp-4); }
+.gp-gap-5 { gap: var(--sp-5); }
+
+.gp-divider {
+  height: 1px;
+  background-color: var(--brand-line);
+  margin: var(--sp-4) 0;
+}

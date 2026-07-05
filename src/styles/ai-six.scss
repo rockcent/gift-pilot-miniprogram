@@ -1,0 +1,41 @@
+/* 礼有方 6 大 AI 原生体验 Footer */
+.gp-ai6 {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--sp-2);
+  padding: var(--sp-4);
+  background-color: var(--brand-bg);
+  border-top: 1px solid var(--brand-line);
+}
+
+.gp-ai6__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-1);
+  text-align: center;
+}
+
+.gp-ai6__dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: rgba(35, 178, 109, 0.12);
+  color: var(--brand-green);
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gp-ai6__label {
+  font-size: 10px;
+  color: var(--brand-ink);
+  line-height: 1.3;
+  max-width: 56px;
+}
+
+@media (max-width: 360px) {
+  .gp-ai6 { grid-template-columns: repeat(3, 1fr); }
+}

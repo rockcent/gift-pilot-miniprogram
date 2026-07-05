@@ -1,0 +1,31 @@
+.gp-page__list {
+  padding: 0 var(--sp-4);
+}
+
+.gp-page__tip {
+  background-color: rgba(246, 201, 141, 0.15);
+  border-radius: var(--radius-card);
+  padding: var(--sp-3) var(--sp-4);
+  margin: var(--sp-3) var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.gp-page__tip-title {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: #B0701F;
+}
+
+.gp-page__tip-text {
+  font-size: var(--fs-caption);
+  color: var(--brand-ink-2);
+  line-height: 1.5;
+}
+
+.gp-page__cta-row {
+  display: flex;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+}

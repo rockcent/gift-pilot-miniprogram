@@ -1,0 +1,11 @@
+{
+  "id": "mem_001",
+  "user_id": "u_local",
+  "primary_relations": ["同事", "闺蜜", "长辈"],
+  "budget_range_fen": [10000, 30000],
+  "preferred_styles": ["真实", "真诚", "鲜甜"],
+  "favorite_categories": ["音乐", "茶香", "鲜花", "烘焙"],
+  "best_publish_window": "20:00 - 22:00",
+  "goal_text": "月佣金 ¥2,000",
+  "updated_at": 1748265600000
+}
