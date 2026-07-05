@@ -1,5 +1,7 @@
 module.exports = {
   presets: [
-    ['taro', { framework: 'react', ts: true, useBuiltIns: 'usage' }]
+    ['@babel/preset-env', { targets: { node: 'current' } }],
+    ['@babel/preset-typescript'],
+    ['@babel/preset-react']
   ]
 };

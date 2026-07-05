@@ -1,7 +1,9 @@
 module.exports = {
-  preset: 'taro-jest',
   testEnvironment: 'jsdom',
-  testMatch: ['**/__tests__/**/*.test.ts?(x)'],
+  testMatch: ['**/__tests__/**/*.test.ts'],
+  transform: {
+    '^.+\\.tsx?$': ['babel-jest', { configFile: './babel.config.js' }]
+  },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@components/(.*)$': '<rootDir>/src/components/$1',
@@ -11,5 +13,5 @@ module.exports = {
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
     '^@data/(.*)$': '<rootDir>/src/data/$1'
   },
-  transformIgnorePatterns: ['/node_modules/(?!@rockcent|taro)']
+  transformIgnorePatterns: ['/node_modules/(?!(@rockcent|taro)/)']
 };
