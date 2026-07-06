@@ -1,0 +1,66 @@
+{
+  "weekId": "2026-W28",
+  "startDate": "2026-07-06T00:00:00.000Z",
+  "weeklyKpi": {
+    "publishTarget": 5,
+    "commissionTargetFen": 20000
+  },
+  "days": [
+    {
+      "date": "2026-07-06",
+      "tasks": [
+        { "id": "t-0706-1", "title": "周一关怀 · 给妈妈的语音问候", "scene": "routine", "expectedSlots": 1, "status": "in_progress" },
+        { "id": "t-0706-2", "title": "七夕预热内容 1", "scene": "campaign", "expectedSlots": 1, "status": "pending" },
+        { "id": "t-0706-3", "title": "七夕预热内容 2", "scene": "campaign", "expectedSlots": 1, "status": "pending" }
+      ]
+    },
+    {
+      "date": "2026-07-07",
+      "tasks": [
+        { "id": "t-0707-1", "title": "七夕节 · 老婆惊喜礼盒", "scene": "festival", "expectedSlots": 2, "status": "pending" },
+        { "id": "t-0707-2", "title": "七夕节 · 闺蜜送礼", "scene": "festival", "expectedSlots": 1, "status": "pending" },
+        { "id": "t-0707-3", "title": "七夕节 · 朋友圈素材", "scene": "campaign", "expectedSlots": 1, "status": "pending" },
+        { "id": "t-0707-4", "title": "七夕节视频号 hook", "scene": "campaign", "expectedSlots": 1, "status": "pending" }
+      ]
+    },
+    {
+      "date": "2026-07-08",
+      "tasks": [
+        { "id": "t-0708-1", "title": "同事咖啡礼盒 · 升职祝贺", "scene": "birthday", "expectedSlots": 1, "status": "pending" },
+        { "id": "t-0708-2", "title": "客户回访礼 · 答谢采购总监", "scene": "campaign", "expectedSlots": 1, "status": "pending" },
+        { "id": "t-0708-3", "title": "周三职场话题素材", "scene": "campaign", "expectedSlots": 1, "status": "pending" }
+      ]
+    },
+    {
+      "date": "2026-07-09",
+      "tasks": [
+        { "id": "t-0709-1", "title": "邻居伴手礼 · 乔迁新居贺礼", "scene": "routine", "expectedSlots": 1, "status": "pending" },
+        { "id": "t-0709-2", "title": "同事开工下午茶订制", "scene": "routine", "expectedSlots": 1, "status": "pending" },
+        { "id": "t-0709-3", "title": "周四新选题探索 · 夏日小家电", "scene": "campaign", "expectedSlots": 1, "status": "pending" }
+      ]
+    },
+    {
+      "date": "2026-07-10",
+      "tasks": [
+        { "id": "t-0710-1", "title": "周末复盘 + 完成本周 5 篇 KPI", "scene": "campaign", "expectedSlots": 1, "status": "pending" },
+        { "id": "t-0710-2", "title": "父亲节大礼包预告内容 1", "scene": "festival", "expectedSlots": 2, "status": "pending" },
+        { "id": "t-0710-3", "title": "父亲节大礼包预告内容 2", "scene": "festival", "expectedSlots": 1, "status": "pending" }
+      ]
+    },
+    {
+      "date": "2026-07-11",
+      "tasks": [
+        { "id": "t-0711-1", "title": "周六灵感 · 周末送礼 1", "scene": "campaign", "expectedSlots": 1, "status": "pending" },
+        { "id": "t-0711-2", "title": "周六灵感 · 周末送礼 2", "scene": "campaign", "expectedSlots": 1, "status": "pending" },
+        { "id": "t-0711-3", "title": "周六灵感 · 周末送礼 3", "scene": "campaign", "expectedSlots": 1, "status": "pending" }
+      ]
+    },
+    {
+      "date": "2026-07-12",
+      "tasks": [
+        { "id": "t-0712-1", "title": "周日复盘 · 撰写下周 7 天计划", "scene": "campaign", "expectedSlots": 1, "status": "pending" },
+        { "id": "t-0712-2", "title": "周日家庭聚餐派礼", "scene": "routine", "expectedSlots": 2, "status": "pending" }
+      ]
+    }
+  ]
+}
