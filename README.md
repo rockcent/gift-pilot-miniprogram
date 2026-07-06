@@ -78,6 +78,21 @@ pnpm run check:no-sensitive        # 敏感信息扫描
 - ✅ 4 个 smoke 脚本（平台 pin / 敏感扫描 / 整数金额 / 6 大 AI 标签）
 - ✅ GitHub Actions 最小 CI
 - ✅ H5 视觉预览（10 张截图，见 `dist-screenshots/README.md`）
+
+## V0.8 路线图 AI 经营版（.specify/features/v0-8-ai-operation/）
+
+- ✅ **PR-1** 周经营计划 + 节日机会（commit `a1c9962` 起；本页 11 张截图）
+  - 新页面 `pages/week-plan/`：7 天格子 + KPI Bar + 今日高亮 + 节日卡
+  - 新组件 `components/festival-card/`：emoji + 倒计时 + 推荐语 + 关系 chips
+  - `ai-store` 增 `weekPlan` + `festivalOpportunities` 字段 + 2 个 `load*` action
+  - 2 个 mock service（接口形态 = 真实 ProviderCallResult）
+  - 2 个 mock 数据（7 天 21 任务 + 6 个节日 0–128 天分布）
+  - index 页加 2 张 V0.8 卡片
+  - 13 个新增 jest 单测（plan / festival / store-v08）
+- ⏳ PR-2 风格学习
+- ⏳ PR-3 发布时间优化 + 多平台内容
+- ⏳ PR-4 商品替换提醒
+
 - ⏳ 阶段二：接通真实微信云开发后端 + 真实 LLM（OpenAI 兼容）+ 真实商品库
 - ⏳ 阶段三：礼有方 Pro
 - ⏳ 阶段四：礼有方云（SaaS）

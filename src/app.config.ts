@@ -9,7 +9,8 @@ export default defineAppConfig({
     'pages/orders/index',
     'pages/review/index',
     'pages/next-plan/index',
-    'pages/memory/index'
+    'pages/memory/index',
+    'pages/week-plan/index'
   ],
   window: {
     backgroundTextStyle: 'dark',

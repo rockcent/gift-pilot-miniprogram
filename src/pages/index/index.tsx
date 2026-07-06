@@ -1,8 +1,10 @@
 import { View, Text, ScrollView } from '@tarojs/components';
 import { useState } from 'react';
 import Taro from '@tarojs/taro';
+import { useEffect, useMemo } from 'react';
 import { ChatBubble, ChatInput } from '../../components/chat/chat-bubble';
 import { AISixBanner } from '../../components/ai-six-banner/ai-six-banner';
+import { FestivalCard } from '../../components/festival-card/festival-card';
 import { useAIStore } from '../../stores/ai-store';
 import { formatYuan, yuanToFen } from '../../utils/money';
 import './index.scss';
@@ -12,6 +14,36 @@ export default function Index() {
   const askHistory = useAIStore((s) => s.askHistory);
   const recommendation = useAIStore((s) => s.recommendation);
   const ask = useAIStore((s) => s.ask);
+
+  /* V0.8 PR-1: 一周计划 + 节日机会 */
+  const weekPlan = useAIStore((s) => s.weekPlan);
+  const festivalOpportunities = useAIStore((s) => s.festivalOpportunities);
+  const loadWeekPlan = useAIStore((s) => s.loadWeekPlan);
+  const loadFestivalOpportunities = useAIStore((s) => s.loadFestivalOpportunities);
+
+  useEffect(() => {
+    if (!weekPlan) {
+      loadWeekPlan();
+    }
+    if (festivalOpportunities.length === 0) {
+      loadFestivalOpportunities();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const weekKpi = useMemo(() => {
+    if (!weekPlan) return null;
+    const all = weekPlan.days.flatMap((d) => d.tasks);
+    const pending = all.filter((t) => t.status === 'pending').length;
+    return {
+      pending,
+      total: all.length,
+      target: formatYuan(weekPlan.weeklyKpi.commissionTargetFen)
+    };
+  }, [weekPlan]);
+
+  const goWeekPlan = () => Taro.navigateTo({ url: '/pages/week-plan/index' });
+
 
   const onSend = async () => {
     const text = input.trim();
@@ -40,6 +72,33 @@ export default function Index() {
             今天准备送谁、预算多少、什么场景，我来帮你想得体又有新意。
           </Text>
         </View>
+
+        {/* V0.8 PR-1: 今日计划卡 + 今日节日卡 */}
+        <View className="gp-page__card">
+          <Text className="gp-page__card-title">📅 今日计划</Text>
+          {weekPlan ? (
+            <>
+              <Text className="gp-page__overview-row">本周还剩 {weekKpi?.pending} 条任务</Text>
+              <Text className="gp-page__overview-row">佣金目标：{weekKpi?.target} 元</Text>
+              <View className="gp-page__cta-row">
+                <View className="gp-btn gp-btn--primary gp-btn--block" onClick={goWeekPlan}>
+                  <Text>查看一周计划 →</Text>
+                </View>
+              </View>
+            </>
+          ) : (
+            <Text className="gp-caption">小礼正在整理本周计划…</Text>
+          )}
+        </View>
+
+        {festivalOpportunities.length > 0 && (
+          <View className="gp-page__card">
+            <Text className="gp-page__card-title">🎉 今日节日机会</Text>
+            {festivalOpportunities.slice(0, 2).map((f) => (
+              <FestivalCard key={f.id} festival={f} onPick={goWeekPlan} />
+            ))}
+          </View>
+        )}
 
         {/* 对话历史 */}
         {askHistory.length > 0 && (

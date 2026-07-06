@@ -23,7 +23,8 @@ const PAGES = [
   { name: 'orders',           path: 'pages/orders/index' },
   { name: 'review',           path: 'pages/review/index' },
   { name: 'next-plan',        path: 'pages/next-plan/index' },
-  { name: 'memory',           path: 'pages/memory/index' }
+  { name: 'memory',           path: 'pages/memory/index' },
+  { name: 'week-plan',        path: 'pages/week-plan/index' }
 ];
 
 async function main() {

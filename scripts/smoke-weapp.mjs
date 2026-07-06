@@ -67,12 +67,13 @@ const pages = [
   'src/pages/orders/index.tsx',
   'src/pages/review/index.tsx',
   'src/pages/next-plan/index.tsx',
-  'src/pages/memory/index.tsx'
+  'src/pages/memory/index.tsx',
+  'src/pages/week-plan/index.tsx'
 ];
 for (const p of pages) {
   if (!fs.existsSync(path.join(ROOT, p))) bad('missing page entry: ' + p);
 }
-if (!errs.some((e) => e.startsWith('missing page'))) ok('all 10 page entries present');
+if (!errs.some((e) => e.startsWith('missing page'))) ok('all 11 page entries present (V0.6×10 + V0.8 PR-1 week-plan)');
 
 const sixLabels = ['选对礼', '谈得好', '做得美', '发得准', '看得清', '改得好'];
 const bannerPath = path.join(ROOT, 'src/components/ai-six-banner/ai-six-banner.tsx');
