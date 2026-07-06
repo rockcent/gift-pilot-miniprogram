@@ -63,3 +63,40 @@
 - 发布时间优化 + 多平台内容（PR-3）
 - 商品替换提醒（PR-4）
 - 真实微信云开发 / 真实 LLM / 真实商品库（阶段二）
+
+## v0.8.0-pr2 · 2026-07-06
+
+礼有方（GiftPilot）微信小程序 V0.8 AI 经营版 / PR-2：风格学习（6 chip + 风格档案持久化）。
+
+### Features
+- 内容生成工作台加 6 风格 chip 横排：自然分享 / 实用推荐 / 情绪价值 / 个性化 / 专业 / 轻松幽默
+- AI 记忆页加'风格档案'区块，显示 6 个 chip 各自 used 计数 + '✓ 已学习' 状态
+- '📌 记住这个风格' 按钮 + '重置风格档案' 二次确认弹窗
+- `personal`（个性化）chip：自动按 `styleProfile.emojiRate` 注入 emoji + 按 `sentenceLen` 截断
+
+### Engineering
+- `src/types/index.ts` 增 `StyleId` / `StyleChipMeta` / `StyleUsageStat` / `StyleProfile` + `STYLE_IDS` + `blankStyleProfile()` helper
+- `src/services/ai/style.ts` 新增：mock `learnFromEdit` + `generatePersonal` + `getChipMetaList` + 6 静态 chip 数据
+- `src/stores/memory-store.ts` 扩字段：增 `styleProfile` + 4 action（`rememberStyle` / `updateStyleProfile` / `applyPersonalStyle` / `resetStyleProfile`），`clear()` 同时重置 styleProfile
+- `src/pages/content/index.tsx` 改：`useMemo` 6 chip + 横排 `ScrollView` + onPickChip + '📌' 按钮 + Taro 弹 toast
+- `src/pages/memory/index.tsx` 改：风格档案区块 6 chip 网格 + Taro.showModal 重置
+- `src/components/content-card/content-card.tsx` 改：可选 `onRemember` prop + '📌 记住' 按钮
+
+### Testing
+- 14 个新增 jest 单测：
+  - `__tests__/services/style.test.ts` (7 tests): 6 chips 完整 + unique id + learnFromEdit + generatePersonal 3 case
+  - `__tests__/stores/memory-style.test.ts` (7 tests): initial + rememberStyle + resetStyleProfile + clear() + applyPersonalStyle 3 case
+- 总：14 v0.6 + 14 PR-1 + 14 PR-2 = **41 tests in 9 suites 全部 PASS**
+
+### Guard
+- `scripts/smoke-weapp.mjs` 加 'all 6 V0.8 PR-2 style chips present in services/ai/style.ts'
+- 全 7 smoke checks PASS
+
+### Documentation
+- `.specify/features/v0-8-style-learning/{spec.md, plan.md, tasks.md}` 三件套
+- 本 CHANGELOG + README V0.8 段
+
+### Out of scope（本 PR-2 不做）
+- 真实 LLM（阶段二）
+- 风格融合 / 跨用户共享（V1.0）
+

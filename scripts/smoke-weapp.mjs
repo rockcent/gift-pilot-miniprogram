@@ -82,6 +82,19 @@ for (const label of sixLabels) {
   if (!bannerBody.includes(label)) bad('AI 6 banner missing label: ' + label);
 }
 if (!errs.some((e) => e.startsWith('AI 6 banner'))) ok('AI 6 labels present in banner');
+/* V0.8 PR-2: 6 风格 chip 数据完整性 */
+const styleChipPath = path.join(ROOT, 'src/services/ai/style.ts');
+if (fs.existsSync(styleChipPath)) {
+  const sc = fs.readFileSync(styleChipPath, 'utf8');
+  const styleIds = ['share', 'review', 'emotion', 'personal', 'professional', 'funny'];
+  for (const id of styleIds) {
+    if (!sc.includes(`id: '${id}'`)) bad('V0.8 PR-2 style chip missing: ' + id);
+  }
+  if (!errs.some((e) => e.startsWith('V0.8 PR-2'))) ok('all 6 V0.8 PR-2 style chips present in services/ai/style.ts');
+} else {
+  bad('V0.8 PR-2 style service missing');
+}
+
 
 console.log('=== Smoke: gift-pilot-miniprogram ===');
 for (const o of oks) console.log('  OK ' + o);

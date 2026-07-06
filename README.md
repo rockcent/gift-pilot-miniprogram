@@ -81,15 +81,16 @@ pnpm run check:no-sensitive        # 敏感信息扫描
 
 ## V0.8 路线图 AI 经营版（.specify/features/v0-8-ai-operation/）
 
-- ✅ **PR-1** 周经营计划 + 节日机会（commit `a1c9962` 起；本页 11 张截图）
-  - 新页面 `pages/week-plan/`：7 天格子 + KPI Bar + 今日高亮 + 节日卡
-  - 新组件 `components/festival-card/`：emoji + 倒计时 + 推荐语 + 关系 chips
-  - `ai-store` 增 `weekPlan` + `festivalOpportunities` 字段 + 2 个 `load*` action
-  - 2 个 mock service（接口形态 = 真实 ProviderCallResult）
-  - 2 个 mock 数据（7 天 21 任务 + 6 个节日 0–128 天分布）
-  - index 页加 2 张 V0.8 卡片
-  - 13 个新增 jest 单测（plan / festival / store-v08）
-- ⏳ PR-2 风格学习
+- ✅ **PR-1** 周经营计划 + 节日机会（merge `849c6a6`；11 张截图）
+  - 见 `.specify/features/v0-8-ai-operation/`
+- ✅ **PR-2** 风格学习（6 chip + 风格档案持久化）
+  - 见 `.specify/features/v0-8-style-learning/`
+  - `content` 页加 6 chip 横排（share / review / emotion / personal / professional / funny）
+  - `memory-store` 增 `styleProfile` + 4 action（`rememberStyle` / `updateStyleProfile` / `applyPersonalStyle` / `resetStyleProfile`）
+  - `memory` 页加'风格档案'区块（6 chip + 各自 used + lastUsedAt）
+  - 新增 `services/ai/style.ts` mock service
+  - `ContentCard` 组件可选 `onRemember` prop + '📌 记住' 按钮
+  - 14 个新增 jest 单测（`style` 7 + `memory-style` 7）
 - ⏳ PR-3 发布时间优化 + 多平台内容
 - ⏳ PR-4 商品替换提醒
 

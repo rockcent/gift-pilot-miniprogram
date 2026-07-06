@@ -1,3 +1,58 @@
 .gp-page__list {
   padding: 0 var(--sp-4);
 }
+
+/* V0.8 PR-2: 风格档案 */
+.gp-memory__style-profile {
+  margin: var(--sp-3) var(--sp-4) var(--sp-4);
+  padding: var(--sp-4);
+  background: var(--brand-bg-card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+.gp-memory__style-head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.gp-memory__chips {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-2);
+}
+.gp-memory__chip {
+  background: var(--brand-bg);
+  border: 1px solid var(--brand-line);
+  border-radius: var(--radius-mini);
+  padding: var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.gp-memory__chip-emoji {
+  font-size: 18px;
+  line-height: 1;
+}
+.gp-memory__chip-label {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--brand-ink);
+}
+.gp-memory__chip-stat {
+  font-size: var(--fs-caption);
+  color: var(--brand-green);
+}
+.gp-memory__chip-time {
+  font-size: var(--fs-mini);
+  color: var(--brand-muted);
+}
+.gp-memory__style-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  border-top: 1px solid var(--brand-line);
+  padding-top: var(--sp-3);
+}
