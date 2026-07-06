@@ -30,3 +30,65 @@
 .gp-page__list {
   padding: 0 var(--sp-4);
 }
+
+/* V0.8 PR-2: 6 chip 横排 */
+.gp-content__chip-strip {
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--brand-bg-card);
+  border-radius: var(--radius-card);
+  margin: var(--sp-3) var(--sp-4);
+  box-shadow: var(--shadow-card);
+}
+.gp-content__chip-inner {
+  display: inline-flex;
+  gap: var(--sp-2);
+  padding-right: var(--sp-4);
+}
+.gp-content__chip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--brand-bg);
+  border: 1px solid var(--brand-line);
+  border-radius: var(--radius-pill);
+  min-width: 64px;
+  flex-shrink: 0;
+}
+.gp-content__chip--active {
+  background: var(--brand-green);
+  border-color: var(--brand-green);
+}
+.gp-content__chip--active .gp-content__chip-emoji,
+.gp-content__chip--active .gp-content__chip-label {
+  color: #fff;
+}
+.gp-content__chip-emoji {
+  font-size: 20px;
+  line-height: 1;
+}
+.gp-content__chip-label {
+  font-size: var(--fs-mini);
+  color: var(--brand-ink-2);
+  font-weight: 500;
+}
+.gp-content__card-wrap {
+  margin-bottom: var(--sp-2);
+}
+.gp-content__remember {
+  margin: var(--sp-4);
+  padding: var(--sp-4);
+  background: var(--brand-bg-card);
+  border-radius: var(--radius-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  box-shadow: var(--shadow-card);
+  border: 1px dashed var(--brand-green);
+}
+.gp-content__remember-caption {
+  font-size: var(--fs-caption);
+  color: var(--brand-muted);
+  text-align: center;
+}

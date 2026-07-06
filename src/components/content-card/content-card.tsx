@@ -8,9 +8,17 @@ export interface ContentCardProps {
   onCopy?: () => void;
   onRegenerate?: () => void;
   onOptimize?: () => void;
+  onRemember?: () => void;
 }
 
-export function ContentCard({ content, active = false, onCopy, onRegenerate, onOptimize }: ContentCardProps) {
+export function ContentCard({
+  content,
+  active = false,
+  onCopy,
+  onRegenerate,
+  onOptimize,
+  onRemember
+}: ContentCardProps) {
   return (
     <View className={`gp-cc ${active ? 'gp-cc--active' : ''}`}>
       <View className="gp-cc__head">
@@ -30,18 +38,26 @@ export function ContentCard({ content, active = false, onCopy, onRegenerate, onO
         ))}
       </View>
       <View className="gp-cc__ops">
-        <View className="gp-cc__op" onClick={onCopy}>
-          <Text>📋 复制</Text>
-        </View>
-        <View className="gp-cc__op" onClick={onRegenerate}>
-          <Text>↻ 换一版</Text>
-        </View>
-        <View className="gp-cc__op" onClick={onOptimize}>
-          <Text>✨ 优化</Text>
-        </View>
-        <View className="gp-cc__op">
-          <Text>更多风格</Text>
-        </View>
+        {onCopy && (
+          <View className="gp-cc__op" onClick={onCopy}>
+            <Text>📋 复制</Text>
+          </View>
+        )}
+        {onRegenerate && (
+          <View className="gp-cc__op" onClick={onRegenerate}>
+            <Text>↻ 换一版</Text>
+          </View>
+        )}
+        {onOptimize && (
+          <View className="gp-cc__op" onClick={onOptimize}>
+            <Text>✨ 优化</Text>
+          </View>
+        )}
+        {onRemember && (
+          <View className="gp-cc__op gp-cc__op--remember" onClick={onRemember}>
+            <Text>📌 记住</Text>
+          </View>
+        )}
       </View>
     </View>
   );

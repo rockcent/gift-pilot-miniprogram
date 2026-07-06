@@ -2,12 +2,17 @@ import { View, Text, ScrollView } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { AIMemoryRow } from '../../components/ai-memory-row/ai-memory-row';
 import { useMemoryStore } from '../../stores/memory-store';
+import { styleMock } from '../../services/ai/style';
 import './index.scss';
 
 export default function MemoryPage() {
   const memory = useMemoryStore((s) => s.memory);
   const update = useMemoryStore((s) => s.update);
   const clear = useMemoryStore((s) => s.clear);
+  /* V0.8 PR-2: 风格档案 */
+  const styleProfile = useMemoryStore((s) => s.styleProfile);
+  const rememberStyle = useMemoryStore((s) => s.rememberStyle);
+  const resetStyleProfile = useMemoryStore((s) => s.resetStyleProfile);
 
   const onEdit = (idx: number) => {
     const labels = ['primary_relations', 'budget_range_fen', 'preferred_styles', 'favorite_categories', 'best_publish_window', 'goal_text'] as const;
@@ -69,6 +74,39 @@ export default function MemoryPage() {
           <AIMemoryRow index={4} label="擅长商品类目" tags={memory.favorite_categories} onEdit={() => onEdit(3)} />
           <AIMemoryRow index={5} label="最佳发布时间" text={memory.best_publish_window} onEdit={() => onEdit(4)} />
           <AIMemoryRow index={6} label="经营目标" text={memory.goal_text} onEdit={() => onEdit(5)} />
+        </View>
+
+        {/* V0.8 PR-2: 风格档案 */}
+        <View className="gp-memory__style-profile">
+          <View className="gp-memory__style-head">
+            <Text className="gp-h2">风格档案</Text>
+            <Text className="gp-caption">每次按 “📌 记住” 都会自动学习</Text>
+          </View>
+          <View className="gp-memory__chips">
+            {styleMock.getChipMetaList().map((c) => {
+              const stat = styleProfile.weights[c.id] ?? { used: 0, lastUsedAt: null };
+              return (
+                <View key={c.id} className="gp-memory__chip" onClick={() => rememberStyle(c.id)}>
+                  <Text className="gp-memory__chip-emoji">{c.emoji}</Text>
+                  <Text className="gp-memory__chip-label">{c.label}</Text>
+                  <Text className="gp-memory__chip-stat">已用 {stat.used} 次</Text>
+                  <Text className="gp-memory__chip-time">{stat.lastUsedAt ? "✓ 已学习" : "未使用"}</Text>
+                </View>
+              );
+            })}
+          </View>
+          <View className="gp-memory__style-meta">
+            <Text className="gp-caption">总记忆修改：{styleProfile.totalEdits} 次</Text>
+            <View className="gp-btn gp-btn--text" onClick={() => {
+              Taro.showModal({
+                title: '重置风格档案',
+                content: '确认重置？已学习的 6 种风格偏好会清空。',
+                success: ({ confirm }) => confirm && resetStyleProfile()
+              });
+            }}>
+              <Text>重置风格档案</Text>
+            </View>
+          </View>
         </View>
 
         <View className="gp-page__cta-row">

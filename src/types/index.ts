@@ -183,3 +183,38 @@ export function computeDaysAway(targetISO: string, today: Date = new Date()): nu
   const b = Date.UTC(target.getFullYear(), target.getMonth(), target.getDate());
   return Math.round((b - a) / 86_400_000);
 }
+
+/* V0.8 PR-2: 6 风格 chip + 风格档案 */
+
+export type StyleId = 'share' | 'review' | 'emotion' | 'personal' | 'professional' | 'funny';
+export type SentenceLen = 'short' | 'medium' | 'long';
+
+export interface StyleChipMeta {
+  id: StyleId;
+  label: string;            // '自然分享'
+  emoji: string;            // '✨'
+  description: string;      // '温暖随性，像发朋友圈'
+  presetStyle: 'share' | 'review' | 'emotion';  // 复制 v0.6 已有 3 种之一
+  isPersonalized: boolean;
+}
+
+export interface StyleUsageStat {
+  used: number;
+  lastUsedAt: number | null;
+}
+
+export interface StyleProfile {
+  weights: Record<StyleId, StyleUsageStat>;
+  sentenceLen: SentenceLen;
+  emojiRate: number;        // 0..1，默认 0.3
+  totalEdits: number;
+  learnedAt: number | null;
+}
+
+export const STYLE_IDS: StyleId[] = ['share', 'review', 'emotion', 'personal', 'professional', 'funny'];
+
+export function blankStyleProfile(): StyleProfile {
+  const weights = {} as Record<StyleId, StyleUsageStat>;
+  for (const id of STYLE_IDS) weights[id] = { used: 0, lastUsedAt: null };
+  return { weights, sentenceLen: 'medium', emojiRate: 0.3, totalEdits: 0, learnedAt: null };
+}
