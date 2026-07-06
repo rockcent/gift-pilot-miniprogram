@@ -10,9 +10,13 @@ import type {
   Publish,
   PublishChannel,
   ProviderCallResult,
-  AskResult
+  AskResult,
+  FestivalOpportunity,
+  WeekPlan
 } from '../types';
 import { aiMock } from '../services/ai/mock';
+import { planMock } from '../services/ai/plan';
+import { festivalMock } from '../services/ai/festival';
 
 interface AIState {
   /* 推荐 */
@@ -40,6 +44,12 @@ interface AIState {
   confirmPublish: () => void;
   loadReview: () => Promise<ProviderCallResult<ReviewResult>>;
   loadPlan: () => Promise<ProviderCallResult<PlanItem[]>>;
+
+  /* V0.8 PR-1 */
+  weekPlan: WeekPlan | null;
+  festivalOpportunities: FestivalOpportunity[];
+  loadWeekPlan: () => Promise<ProviderCallResult<WeekPlan>>;
+  loadFestivalOpportunities: () => Promise<ProviderCallResult<FestivalOpportunity[]>>;
   reset: () => void;
 }
 
@@ -52,6 +62,8 @@ export const useAIStore = create<AIState>((set, get) => ({
   publish: null,
   review: null,
   plan: [],
+  weekPlan: null,
+  festivalOpportunities: [],
 
   ask: async (raw) => {
     const res = await aiMock.ask(raw);
@@ -120,6 +132,20 @@ export const useAIStore = create<AIState>((set, get) => ({
     return res;
   },
 
+
+  /* V0.8 PR-1 */
+  loadWeekPlan: async () => {
+    const res = await planMock.fetchWeekPlan();
+    if (res.ok && res.data) set({ weekPlan: res.data });
+    return res;
+  },
+
+  loadFestivalOpportunities: async () => {
+    const res = await festivalMock.fetchFestivalOpportunities();
+    if (res.ok && res.data) set({ festivalOpportunities: res.data });
+    return res;
+  },
+
   reset: () => set({
     lastQuery: null,
     recommendation: null,
@@ -128,6 +154,8 @@ export const useAIStore = create<AIState>((set, get) => ({
     cover: null,
     publish: null,
     review: null,
-    plan: []
+    plan: [],
+    weekPlan: null,
+    festivalOpportunities: []
   })
 }));

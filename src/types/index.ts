@@ -132,3 +132,54 @@ export type AskResult =
   | { type: 'recommend'; recommendation: RecommendationSnapshot }
   | { type: 'clarify'; questions: string[] }
   | { type: 'greeting'; message: string };
+
+/* V0.8 PR-1: 一周经营计划 + 节日机会 */
+
+export type SceneKind = 'birthday' | 'festival' | 'campaign' | 'routine';
+export type DayTaskStatus = 'pending' | 'in_progress' | 'done' | 'skipped';
+
+export interface DayTask {
+  id: string;
+  title: string;
+  scene: SceneKind;
+  expectedSlots: number;
+  status: DayTaskStatus;
+}
+
+export interface WeekPlanDay {
+  date: string;            // YYYY-MM-DD
+  tasks: DayTask[];
+}
+
+export interface WeeklyKpi {
+  publishTarget: number;
+  commissionTargetFen: number;
+}
+
+export interface WeekPlan {
+  weekId: string;          // '2026-W27'
+  startDate: string;       // ISO
+  days: WeekPlanDay[];
+  weeklyKpi: WeeklyKpi;
+}
+
+export type FestivalRelation = 'mother' | 'wife' | 'grandma' | 'father' | 'friend' | 'colleague' | 'kids' | 'partner';
+
+export interface FestivalOpportunity {
+  id: string;              // 'mother-day-2026'
+  name: string;            // '母亲节'
+  emoji: string;           // '💐'
+  startDate: string;       // ISO
+  endDate: string;
+  daysAway: number;        // computed at fetch time
+  recommendedRelations: FestivalRelation[];
+  hotGifts: string[];      // mock gift IDs
+  aiPitch: string;         // one-line AI 语气
+}
+
+export function computeDaysAway(targetISO: string, today: Date = new Date()): number {
+  const target = new Date(targetISO);
+  const a = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+  const b = Date.UTC(target.getFullYear(), target.getMonth(), target.getDate());
+  return Math.round((b - a) / 86_400_000);
+}

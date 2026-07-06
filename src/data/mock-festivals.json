@@ -1,0 +1,62 @@
+[
+  {
+    "id": "summer-checkin-2026",
+    "name": "夏日活力打卡",
+    "emoji": "🌞",
+    "startDate": "2026-07-06T00:00:00.000Z",
+    "endDate": "2026-07-12T23:59:59.000Z",
+    "recommendedRelations": ["friend", "colleague"],
+    "hotGifts": ["g001", "g007"],
+    "aiPitch": "夏天最适合给朋友送点清爽小礼，评论区我会精选推荐。"
+  },
+  {
+    "id": "army-day-2026",
+    "name": "建军节致敬",
+    "emoji": "🎖️",
+    "startDate": "2026-08-01T00:00:00.000Z",
+    "endDate": "2026-08-01T23:59:59.000Z",
+    "recommendedRelations": ["father", "partner"],
+    "hotGifts": ["g007", "g012"],
+    "aiPitch": "向身边最可爱的人致敬，可以送一份有分量的心意。"
+  },
+  {
+    "id": "fathers-day-2026",
+    "name": "父亲节",
+    "emoji": "👔",
+    "startDate": "2026-08-08T00:00:00.000Z",
+    "endDate": "2026-08-08T23:59:59.000Z",
+    "recommendedRelations": ["father", "grandma"],
+    "hotGifts": ["g012", "g006"],
+    "aiPitch": "趁父亲节给爸爸送点贴心好物，把爱说出口。"
+  },
+  {
+    "id": "qixi-2026",
+    "name": "七夕节",
+    "emoji": "💝",
+    "startDate": "2026-08-29T00:00:00.000Z",
+    "endDate": "2026-08-29T23:59:59.000Z",
+    "recommendedRelations": ["wife", "partner", "mother"],
+    "hotGifts": ["g005", "g010"],
+    "aiPitch": "中国情人节，给 ta 一份仪式感的礼物。"
+  },
+  {
+    "id": "mid-autumn-2026",
+    "name": "中秋节",
+    "emoji": "🥮",
+    "startDate": "2026-10-03T00:00:00.000Z",
+    "endDate": "2026-10-03T23:59:59.000Z",
+    "recommendedRelations": ["mother", "grandma", "father"],
+    "hotGifts": ["g002", "g008"],
+    "aiPitch": "团圆时分，给家人挑一份不远不近刚刚好的心意。"
+  },
+  {
+    "id": "double-eleven-2026",
+    "name": "双十一大促",
+    "emoji": "🛒",
+    "startDate": "2026-11-11T00:00:00.000Z",
+    "endDate": "2026-11-11T23:59:59.000Z",
+    "recommendedRelations": ["friend", "colleague", "kids", "partner"],
+    "hotGifts": ["g001", "g003", "g010", "g011"],
+    "aiPitch": "大促囤礼推荐，全场低至 5 折，提前加购不错过。"
+  }
+]

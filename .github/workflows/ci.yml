@@ -23,7 +23,7 @@ jobs:
       - name: Sensitive scan
         run: node ./scripts/check-no-sensitive.mjs
 
-      - name: Smoke (10 pages + 6 AI labels + integer fen)
+      - name: Smoke (11 pages incl. V0.8 PR-1 week-plan + 6 AI labels + integer fen)
         run: node ./scripts/smoke-weapp.mjs
 
       # lint / build:weapp / test 需要真实安装 @rockcent/platform 与 Taro 才能跑；
