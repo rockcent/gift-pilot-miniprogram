@@ -37,6 +37,7 @@ gift-pilot-miniprogram/
 ├── __tests__/                        # Jest 单测
 ├── scripts/                          # smoke / platform-deps / no-sensitive
 ├── .github/workflows/ci.yml          # GitHub Actions
+├── dist-screenshots/                 # H5 渲染的 10 张视觉预览
 └── package.json                      # 平台 pin @rockcent/platform
 ```
 
@@ -54,11 +55,13 @@ gift-pilot-miniprogram/
 
 ```bash
 pnpm install --frozen-lockfile       # 阶段二生成 lockfile 后启用
-pnpm run dev:weapp                   # 开发模式（Taro watch）
-pnpm run build:weapp                 # 输出到 dist/
-pnpm run smoke:weapp                 # 跑 smoke 检查（无需安装依赖）
-pnpm run check:platform-deps         # 平台 pin 检查
-pnpm run check:no-sensitive          # 敏感信息扫描
+pnpm run dev:weapp                 # 开发模式（Taro watch）
+pnpm run build:weapp               # 输出到 dist/（需真实 AppID）
+pnpm run build:h5                  # 输出到 dist/（H5 视觉验证，零 AppID 依赖）
+pnpm run screenshot:h5             # 渲染 dist/ 并生成 10 张 420x820 PNG 截图
+pnpm run smoke:weapp               # 跑 smoke 检查（无需安装依赖）
+pnpm run check:platform-deps       # 平台 pin 检查
+pnpm run check:no-sensitive        # 敏感信息扫描
 ```
 
 ## 微信开发者工具导入
@@ -74,6 +77,7 @@ pnpm run check:no-sensitive          # 敏感信息扫描
 - ✅ Zustand stores + mock 数据 + mock AI 适配（接口形态 = 真实 ProviderCallResult）
 - ✅ 4 个 smoke 脚本（平台 pin / 敏感扫描 / 整数金额 / 6 大 AI 标签）
 - ✅ GitHub Actions 最小 CI
+- ✅ H5 视觉预览（10 张截图，见 `dist-screenshots/README.md`）
 - ⏳ 阶段二：接通真实微信云开发后端 + 真实 LLM（OpenAI 兼容）+ 真实商品库
 - ⏳ 阶段三：礼有方 Pro
 - ⏳ 阶段四：礼有方云（SaaS）

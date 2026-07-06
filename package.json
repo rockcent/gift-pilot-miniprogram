@@ -17,7 +17,9 @@
     "test:watch": "jest --watch",
     "smoke:weapp": "node ./scripts/smoke-weapp.mjs",
     "check:platform-deps": "node /Volumes/Rock2/rockcent-platform/scripts/check-platform-dependency-specs.js . || node ./scripts/check-platform-deps-local.mjs",
-    "check:no-sensitive": "node ./scripts/check-no-sensitive.mjs"
+    "check:no-sensitive": "node ./scripts/check-no-sensitive.mjs",
+    "build:h5": "taro build --type h5",
+    "screenshot:h5": "node scripts/screenshot-h5.mjs"
   },
   "dependencies": {
     "@tarojs/components": "^3.6.30",
@@ -38,6 +40,10 @@
     "@babel/preset-env": "^7.24.0",
     "@babel/preset-react": "^7.24.0",
     "@babel/preset-typescript": "^7.24.0",
+    "@tarojs/cli": "^3.6.30",
+    "@tarojs/plugin-platform-h5": "^3.6.30",
+    "@tarojs/webpack-runner": "^3.6.30",
+    "@tarojs/webpack5-runner": "^3.6.30",
     "@testing-library/react": "^14.2.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.0",
@@ -46,11 +52,14 @@
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
     "babel-jest": "^29.7.0",
+    "babel-preset-taro": "^4.2.0",
+    "copy-webpack-plugin": "^9.1.0",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "typescript": "^5.4.0"
+    "typescript": "^5.4.0",
+    "webpack": "^5.75.0"
   }
 }
