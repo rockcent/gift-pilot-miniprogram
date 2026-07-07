@@ -23,7 +23,8 @@
     "screenshot:h5": "node scripts/screenshot-h5.mjs",
     "deploy:preflight": "bash scripts/deploy-preflight.sh",
     "deploy:dry-run": "RSYNC_DRY_RUN=1 bash scripts/deploy-production.sh",
-    "deploy:production": "bash scripts/deploy-production.sh"
+    "deploy:production": "bash scripts/deploy-production.sh",
+    "deploy:smoke": "bash scripts/post-deploy-smoke.sh"
   },
   "dependencies": {
     "@tarojs/components": "^3.6.30",
