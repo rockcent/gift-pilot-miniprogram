@@ -14,10 +14,14 @@ bad() { errs+=("$1"); }
 
 echo "=== Pre-flight: gift-pilot-miniprogram (Taro H5) deploy ==="
 
-# 1. 工作树状态（必须 main 分支）
+# 1. 工作树状态（必须 main 分支，但允许 SKIP_MAIN_CHECK=1 覆盖，用于从 feature 分支 deploy）
 HEAD_BRANCH=$(git -C "$ROOT_DIR" branch --show-current 2>/dev/null || git -C "$ROOT_DIR" rev-parse --abbrev-ref HEAD)
 if [ "$HEAD_BRANCH" != "main" ]; then
-  bad "HEAD on '$HEAD_BRANCH' (expected main)"
+  if [ "${SKIP_MAIN_CHECK:-0}" = "1" ]; then
+    oks+=("(skip) HEAD on '$HEAD_BRANCH' — SKIP_MAIN_CHECK=1 覆盖")
+  else
+    bad "HEAD on '$HEAD_BRANCH' (expected main; set SKIP_MAIN_CHECK=1 to override)"
+  fi
 else
   ok "HEAD on main"
 fi
