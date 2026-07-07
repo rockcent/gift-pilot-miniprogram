@@ -92,3 +92,53 @@
   color: var(--brand-muted);
   text-align: center;
 }
+
+/* V0.8 PR-3: 多平台分发 */
+.gp-content__multi {
+  background-color: var(--brand-bg-card);
+  border-radius: var(--radius-card);
+  padding: var(--sp-4);
+  margin: var(--sp-3) var(--sp-4);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+.gp-content__multi-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+.gp-content__multi-card {
+  background-color: var(--brand-bg);
+  border-radius: var(--radius-mini);
+  padding: var(--sp-3);
+  border: 1px solid var(--brand-line);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.gp-content__multi-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.gp-content__multi-card-stat {
+  font-size: var(--fs-caption);
+  color: var(--brand-ink-2);
+  font-weight: 500;
+}
+.gp-content__multi-card-body {
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--brand-ink);
+  white-space: pre-wrap;
+}
+.gp-content__multi-card-hash {
+  font-size: var(--fs-caption);
+  color: var(--brand-green);
+  line-height: 1.5;
+}
+.gp-content__multi-actions {
+  margin-top: var(--sp-2);
+}

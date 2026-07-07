@@ -100,3 +100,44 @@
 - 真实 LLM（阶段二）
 - 风格融合 / 跨用户共享（V1.0）
 
+
+## v0.8.0-pr3 · 2026-07-07
+
+礼有方（GiftPilot）微信小程序 V0.8 AI 经营版 / PR-3：发布时间优化 + 多平台内容。
+
+### Features
+- **发布时间优化**：发布确认页加 ⏰ AI 推荐发布时间（3 档：明早 8:30 / 今晚 21:00 / 后天中午），每档带 reason + 预估打开率；点击 1 档写入 `publish.scheduled_at`，再次点击取消；不选 = 立即发布
+- **多平台内容**：内容页加 📤 多平台分发（朋友圈 ≤80 字 ≤6 行 / 小红书 ≤200 字 emoji 多 / 视频号 hook 开头 ≤80 字）+ 字数统计 + 「📋 一键复制全部平台版」按钮
+- **计划显示**：下周计划页加 🕐 「计划于 XX 发布」卡片（仅当用户已选定时档时显示，从 `publish.scheduled_at` 解析）
+
+### Engineering
+- `src/types/index.ts` 增 `PublishTimeSlot` / `PublishTimeSlotId` / `PlatformId` / `PlatformContent` / `MultiPlatformBundle` + `PUBLISH_TIME_SLOT_IDS` + `PLATFORM_IDS` 常量
+- `src/services/ai/publish-time.ts` 新增（38 行）：`fetchPublishTimeSlots(now?)` 3 档 + `getSlotById`；自带 21:00 后跨日 roll 逻辑
+- `src/services/ai/multi-platform.ts` 新增（97 行）：`generateMultiPlatform({ sourceText, giftName })` 三平台改写 + `formatCopyAll` 拼接
+- `src/stores/ai-store.ts` 扩：`publishTimeSlots` / `multiPlatformContents` 字段 + 3 action（`loadPublishTimeSlots` / `loadMultiPlatform` / `setPublishTimeSlot`）；`buildPublish` 接 `scheduledAtIso` 可选参数；`reset` 同步重置 2 字段
+- `src/pages/publish-confirm/index.tsx` 改：3 slot 卡片 + active 高亮 + onConfirm 调 `setPublishTimeSlot`
+- `src/pages/content/index.tsx` 改：3 mini 卡片 + 字数统计 + hashtags + 一键复制按钮 + useEffect 自动 load
+- `src/pages/next-plan/index.tsx` 改：scheduledLabel 计算 + 🕐 卡片区块
+- SCSS 增量：`gp-pub__slot-grid` + `gp-pub__slot` + `--active` + `gp-content__multi` + `gp-content__multi-card` + `gp-page__schedule`
+
+### Testing
+- 10 个新增 jest 单测：
+  - `__tests__/services/publish-time.test.ts` (4 tests): 3 slot + shape 校验 + 21:00 roll + getSlotById
+  - `__tests__/services/multi-platform.test.ts` (6 tests): 3 variant + moments ≤80 字 ≤6 行 + xiaohongshu ≤200 字 emoji >0 + 视频号 hook 开头 + formatCopyAll null + formatCopyAll 拼接
+- 总：14 v0.6 + 14 PR-1 + 14 PR-2 + 10 PR-3 = **51 tests in 11 suites 全部 PASS**
+
+### Guard
+- `scripts/smoke-weapp.mjs` 重写为「先全部 check 后汇总」，加 3 项 PR-3 校验（3 档 slot IDs + 3 平台 IDs + 2 服务文件）
+- 全 10 smoke checks PASS
+- `npm run lint` 未引入新 error（2 个 pre-existing emoji regex 错误属 PR-2，不动）
+- `npm run build:h5` webpack 5.75.0 PASS（1 entrypoint size warning，非错误）
+
+### Documentation
+- `.specify/features/v0-8-multi-platform/{spec.md, plan.md, tasks.md}` 三件套（commit `f6c7e5a`）
+- `dist-screenshots/{content, publish-confirm, next-plan}.png` 重渲染
+- 本 CHANGELOG + README V0.8 段 PR-3 ✅
+
+### Out of scope（本 PR-3 不做）
+- 真实 LLM（阶段二）
+- 跨平台账号绑定 / 自动发布（V1.0）
+- 商品替换提醒（PR-4）

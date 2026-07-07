@@ -91,7 +91,15 @@ pnpm run check:no-sensitive        # 敏感信息扫描
   - 新增 `services/ai/style.ts` mock service
   - `ContentCard` 组件可选 `onRemember` prop + '📌 记住' 按钮
   - 14 个新增 jest 单测（`style` 7 + `memory-style` 7）
-- ⏳ PR-3 发布时间优化 + 多平台内容
+- ✅ **PR-3** 发布时间优化 + 多平台内容
+  - 见 `.specify/features/v0-8-multi-platform/`
+  - `publish-confirm` 页加 ⏰ AI 推荐发布时间（3 档：明早 8:30 / 今晚 21:00 / 后天中午；点击写入定时）
+  - `content` 页加 📤 多平台分发（朋友圈 ≤80 字 ≤6 行 / 小红书 ≤200 字 emoji 多 / 视频号 hook 开头 ≤80 字）+ 一键复制全部
+  - `next-plan` 页加 🕐 计划于 XX 发布 卡片（当有定时时显示）
+  - 新增 `services/ai/publish-time.ts` + `multi-platform.ts` mock service
+  - `ai-store` 增 `publishTimeSlots` / `multiPlatformContents` + 3 action
+  - 10 个新增 jest 单测（`publish-time` 4 + `multi-platform` 6）
+  - smoke 升级到 10/10 check PASS（加 3 档 slot + 3 平台 ID + 2 服务文件）
 - ⏳ PR-4 商品替换提醒
 
 - ⏳ 阶段二：接通真实微信云开发后端 + 真实 LLM（OpenAI 兼容）+ 真实商品库

@@ -12,8 +12,13 @@ import type {
   ProviderCallResult,
   AskResult,
   FestivalOpportunity,
-  WeekPlan
+  WeekPlan,
+  PublishTimeSlot,
+  PublishTimeSlotId,
+  MultiPlatformBundle
 } from '../types';
+import { publishTimeMock } from '../services/ai/publish-time';
+import { multiPlatformMock } from '../services/ai/multi-platform';
 import { aiMock } from '../services/ai/mock';
 import { planMock } from '../services/ai/plan';
 import { festivalMock } from '../services/ai/festival';
@@ -50,6 +55,13 @@ interface AIState {
   festivalOpportunities: FestivalOpportunity[];
   loadWeekPlan: () => Promise<ProviderCallResult<WeekPlan>>;
   loadFestivalOpportunities: () => Promise<ProviderCallResult<FestivalOpportunity[]>>;
+
+  /* V0.8 PR-3: 发布时间 + 多平台 */
+  publishTimeSlots: PublishTimeSlot[];
+  multiPlatformContents: MultiPlatformBundle | null;
+  loadPublishTimeSlots: () => Promise<ProviderCallResult<PublishTimeSlot[]>>;
+  loadMultiPlatform: (contentId: string, giftName: string) => Promise<ProviderCallResult<MultiPlatformBundle>>;
+  setPublishTimeSlot: (id: PublishTimeSlotId) => void;
   reset: () => void;
 }
 
@@ -64,6 +76,8 @@ export const useAIStore = create<AIState>((set, get) => ({
   plan: [],
   weekPlan: null,
   festivalOpportunities: [],
+  publishTimeSlots: [],
+  multiPlatformContents: null,
 
   ask: async (raw) => {
     const res = await aiMock.ask(raw);
@@ -97,14 +111,14 @@ export const useAIStore = create<AIState>((set, get) => ({
     return res;
   },
 
-  buildPublish: (recId, contentId, coverId, channels) => {
+  buildPublish: (recId, contentId, coverId, channels, scheduledAtIso = null) => {
     const publish: Publish = {
       id: `pub_${Date.now()}`,
       recommendation_id: recId,
       content_id: contentId,
       cover_id: coverId,
       channels,
-      scheduled_at: null,
+      scheduled_at: scheduledAtIso,
       status: 'CREATED',
       quality_score: 92,
       created_at: Date.now(),
@@ -146,6 +160,27 @@ export const useAIStore = create<AIState>((set, get) => ({
     return res;
   },
 
+  /* V0.8 PR-3 */
+  loadPublishTimeSlots: async () => {
+    const res = await publishTimeMock.fetchPublishTimeSlots();
+    if (res.ok && res.data) set({ publishTimeSlots: res.data });
+    return res;
+  },
+
+  loadMultiPlatform: async (_contentId, giftName) => {
+    const sourceText = get().contents[0]?.body ?? '送' + giftName + '的好物推荐，让心意更具体。';
+    const res = await multiPlatformMock.generateMultiPlatform({ sourceText, giftName });
+    if (res.ok && res.data) set({ multiPlatformContents: res.data });
+    return res;
+  },
+
+  setPublishTimeSlot: (id) => {
+    const slot = get().publishTimeSlots.find((s) => s.id === id);
+    if (!slot) return;
+    const p = get().publish;
+    if (p) set({ publish: { ...p, scheduled_at: slot.scheduledAt } });
+  },
+
   reset: () => set({
     lastQuery: null,
     recommendation: null,
@@ -156,6 +191,8 @@ export const useAIStore = create<AIState>((set, get) => ({
     review: null,
     plan: [],
     weekPlan: null,
-    festivalOpportunities: []
+    festivalOpportunities: [],
+    publishTimeSlots: [],
+    multiPlatformContents: null
   })
 }));
