@@ -1,5 +1,5 @@
 import { View, Text, ScrollView } from '@tarojs/components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Taro from '@tarojs/taro';
 import { useAIStore } from '../../stores/ai-store';
 import './index.scss';
@@ -13,11 +13,20 @@ const CHANNEL_LABEL: Record<Channel, string> = {
 
 export default function PublishConfirmPage() {
   const [channels, setChannels] = useState<Channel[]>(['timeline']);
+  /* V0.8 PR-3: 发布时间 */
+  const [activeSlot, setActiveSlot] = useState<string | null>(null);
   const recommendation = useAIStore((s) => s.recommendation);
   const contents = useAIStore((s) => s.contents);
   const cover = useAIStore((s) => s.cover);
   const buildPublish = useAIStore((s) => s.buildPublish);
   const confirmPublish = useAIStore((s) => s.confirmPublish);
+  const publishTimeSlots = useAIStore((s) => s.publishTimeSlots);
+  const loadPublishTimeSlots = useAIStore((s) => s.loadPublishTimeSlots);
+  const setPublishTimeSlot = useAIStore((s) => s.setPublishTimeSlot);
+
+  useEffect(() => {
+    if (publishTimeSlots.length === 0) loadPublishTimeSlots();
+  }, [publishTimeSlots.length, loadPublishTimeSlots]);
 
   const toggle = (c: Channel) => {
     setChannels((prev) => prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c]);
@@ -25,7 +34,9 @@ export default function PublishConfirmPage() {
 
   const onConfirm = () => {
     if (!recommendation || !contents.length || !cover) return;
-    const pub = buildPublish(recommendation.id, contents[0].id, cover.id, channels);
+    const slot = publishTimeSlots.find((s) => s.id === activeSlot);
+    const pub = buildPublish(recommendation.id, contents[0].id, cover.id, channels, slot?.scheduledAt ?? null);
+    if (activeSlot) setPublishTimeSlot(activeSlot as any);
     confirmPublish();
     Taro.navigateTo({ url: '/pages/publish-success/index' });
   };
@@ -75,11 +86,22 @@ export default function PublishConfirmPage() {
           </View>
         </View>
 
-        <View className="gp-page__section">
-          <Text className="gp-h2">发布时间建议</Text>
-          <View className="gp-page__tip">
-            <Text>⏰ 今晚 20:30 - 22:00 最佳</Text>
-            <Text className="gp-caption">同款礼物在这个时间段的点击率最高</Text>
+        <View className="gp-page__section gp-pub__time-section">
+          <Text className="gp-h2">⏰ AI 推荐发布时间</Text>
+          <Text className="gp-caption">点击 1 档即可写入定时；不选 = 立即发布</Text>
+          <View className="gp-pub__slot-grid">
+            {publishTimeSlots.map((slot) => {
+              const active = activeSlot === slot.id;
+              return (
+                <View key={slot.id}
+                  className={`gp-pub__slot ${active ? 'gp-pub__slot--active' : ''}`}
+                  onClick={() => setActiveSlot(active ? null : slot.id)}>
+                  <Text className="gp-pub__slot-label">{slot.label}</Text>
+                  <Text className="gp-pub__slot-reason">{slot.reason}</Text>
+                  <Text className="gp-pub__slot-ctr">预估打开率 {(slot.expectedCtr * 100).toFixed(0)}%</Text>
+                </View>
+              );
+            })}
           </View>
         </View>
 

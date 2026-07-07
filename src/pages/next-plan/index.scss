@@ -29,3 +29,20 @@
   gap: var(--sp-3);
   padding: var(--sp-4);
 }
+
+/* V0.8 PR-3: 计划发布时间 卡片 */
+.gp-page__schedule {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  padding: var(--sp-3) var(--sp-4);
+  margin: var(--sp-3) var(--sp-4) 0;
+  background-color: rgba(35, 178, 109, 0.08);
+  border-radius: var(--radius-card);
+  border-left: 3px solid var(--brand-green);
+}
+.gp-page__schedule-caption {
+  font-size: var(--fs-caption);
+  color: var(--brand-ink-2);
+  line-height: 1.5;
+}

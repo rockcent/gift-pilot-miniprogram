@@ -218,3 +218,36 @@ export function blankStyleProfile(): StyleProfile {
   for (const id of STYLE_IDS) weights[id] = { used: 0, lastUsedAt: null };
   return { weights, sentenceLen: 'medium', emojiRate: 0.3, totalEdits: 0, learnedAt: null };
 }
+
+/* V0.8 PR-3: 发布时间 + 多平台内容 */
+
+export type PublishTimeSlotId = 'tomorrow-morning' | 'tonight-evening' | 'day-after-noon';
+
+export interface PublishTimeSlot {
+  id: PublishTimeSlotId;
+  label: string;            // '明早 8:30'
+  scheduledAt: string;      // ISO 'YYYY-MM-DDTHH:mm:ss.sssZ'
+  reason: string;           // '上班路上刷手机高峰'
+  expectedCtr: number;      // 0..1
+}
+
+export type PlatformId = 'moments' | 'xiaohongshu' | 'shipinhao';
+
+export interface PlatformContent {
+  platformId: PlatformId;
+  title: string;
+  body: string;
+  hashtags: string[];
+  charLimit: number;
+  emojiRate: number;
+}
+
+export interface MultiPlatformBundle {
+  sourceText: string;
+  giftName: string;
+  variants: PlatformContent[];   // 3 platforms
+  generatedAt: number;
+}
+
+export const PLATFORM_IDS: PlatformId[] = ['moments', 'xiaohongshu', 'shipinhao'];
+export const PUBLISH_TIME_SLOT_IDS: PublishTimeSlotId[] = ['tomorrow-morning', 'tonight-evening', 'day-after-noon'];
