@@ -189,3 +189,35 @@ PR-1 → PR-2 → PR-3 → PR-4 全部 merged，V0.8 AI 经营版 6 项增量完
 - 真实点击 / 转化追踪（mock stats）
 - 跨礼物维度推荐模型（V1.0）
 - 自动换品（仅 1 键手动触发）
+
+## v2.0.0-platform-upgrade · 2026-07-07
+
+礼有方（GiftPilot）微信小程序 platform v1.15.2 → **v2.0.0** 升级。
+
+### 范围
+- 仅消费侧升级（per AGENTS.md + migration-guide-v2.0.0.md）
+- 3 项 OQ-1 breaking 适配
+
+### 改动
+- `@rockcent/platform` pin: `platform-v1.15.2` → **`platform-v2.0.0`** (commit `7574f41`)
+- `engines.node`: `>=20.0.0` → **`>=22.0.0`**（OQ-1 ②）
+- `scripts/screenshot-h5.mjs`: codemod 自动应用 dirname-ems（OQ-1 ②）
+  - 删 `__filename` / `__dirname` polyfill
+  - `__dirname` → `import.meta.dirname`
+  - 删 unused `import { fileURLToPath }`
+- npm install `--legacy-peer-deps --package-lock-only`（沿用 V0.8 PR-1 web 端方案绕开 webpack 5.75.0 peer conflict）
+
+### Codemod Findings (dry-run)
+- `deep-import-path` codemod: **0 findings**（mini 端未 import `@rockcent/platform/ai` 子路径，types/ 内部定义 `ProviderCallResult<T>`）
+- `promise-type-narrowing` codemod: **0 findings**（同上原因）
+- `dirname-ems` codemod: **1 file / 3 changes**（仅 `scripts/screenshot-h5.mjs`）
+
+### 验证
+- `npm test`: **57 tests in 12 suites PASS**（与 v0.8 PR-4 main 等同）
+- `node scripts/smoke-weapp.mjs`: **12/12 checks PASS**（含 `platform pin` form 仍为 `git+https://...#platform-v...`）
+- `npm run build:h5`: webpack 5.75.0 PASS
+- Node: **v22.22.2**（满足 `>=22.0.0`）
+
+### Out of scope（本升级 PR 不做）
+- 真实 LLM 接入（V1.0 PR-6 待启动）
+- 真实商品库 / 支付 / 后端（V1.0 待启动）
