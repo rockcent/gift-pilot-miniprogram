@@ -100,7 +100,14 @@ pnpm run check:no-sensitive        # 敏感信息扫描
   - `ai-store` 增 `publishTimeSlots` / `multiPlatformContents` + 3 action
   - 10 个新增 jest 单测（`publish-time` 4 + `multi-platform` 6）
   - smoke 升级到 10/10 check PASS（加 3 档 slot + 3 平台 ID + 2 服务文件）
-- ⏳ PR-4 商品替换提醒
+- ✅ **PR-4** 商品替换提醒
+  - 见 `.specify/features/v0-8-gift-health-alert/`
+  - 复盘页加 🎁 推荐礼物健康度 区块（🟢健康 / 🟡衰减 / 🔴衰退 3 档徽章 + reason）
+  - 🟡🔴 行尾「换新品」1 键触发 `replaceGift(giftId)` mock service，自动写回 `recommendation.gifts` 对应索引
+  - 新增 `services/ai/gift-health.ts` mock service + `judgeGiftHealth()` + `buildHealthReason()` 纯函数
+  - `ai-store` 增 `giftHealthFlags[]` + `lastReplacement` + 2 action（`loadGiftHealthFlags` / `replaceGift`）
+  - 6 个新增 jest 单测（`gift-health` 6 含纯函数判定 + mock service + 排序 + mock 数据）
+  - smoke 升级到 12/12 check PASS（加 3 档 health status + service 文件）
 
 - ⏳ 阶段二：接通真实微信云开发后端 + 真实 LLM（OpenAI 兼容）+ 真实商品库
 - ⏳ 阶段三：礼有方 Pro

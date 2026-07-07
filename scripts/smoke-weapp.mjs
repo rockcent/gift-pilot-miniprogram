@@ -126,7 +126,23 @@ for (const id of platformIds) {
 }
 if (!errs.some((e) => e.startsWith('V0.8 PR-3 platform'))) ok('all 3 V0.8 PR-3 platform ids present in types/index.ts');
 
-/* ---------- 打印结果 ---------- */
+/* ---------- 打印结果放文件末尾 ---------- */
+
+/* ---------- 8. V0.8 PR-4: 3 档健康度 + service 文件 ---------- */
+const pr4TypeBody = pr3TypeBody;  // 复用上方已读入的 types/index.ts
+const healthStatuses = ['healthy', 'cooling', 'fading'];
+for (const s of healthStatuses) {
+  if (!pr4TypeBody.includes(`'${s}'`)) bad('V0.8 PR-4 health status missing in types: ' + s);
+}
+if (!pr4TypeBody.includes('GIFT_HEALTH_STATUSES')) bad('V0.8 PR-4 GIFT_HEALTH_STATUSES export missing');
+if (!pr4TypeBody.includes('GiftHealthFlag')) bad('V0.8 PR-4 GiftHealthFlag type missing');
+if (!errs.some((e) => e.startsWith('V0.8 PR-4 health'))) ok('all 3 V0.8 PR-4 gift health statuses present in types/index.ts');
+
+const pr4ServicePath = path.join(ROOT, 'src/services/ai/gift-health.ts');
+if (!fs.existsSync(pr4ServicePath)) bad('V0.8 PR-4 gift-health service file missing');
+if (!errs.some((e) => e.startsWith('V0.8 PR-4 gift-health'))) ok('V0.8 PR-4 gift-health service file present (src/services/ai/gift-health.ts)');
+
+/* ---------- 打印结果（唯一） ---------- */
 console.log('=== Smoke: gift-pilot-miniprogram ===');
 for (const o of oks) console.log('  OK ' + o);
 if (errs.length) {
