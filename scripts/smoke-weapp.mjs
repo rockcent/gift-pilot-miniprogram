@@ -74,12 +74,15 @@ const pages = [
   'src/pages/review/index.tsx',
   'src/pages/next-plan/index.tsx',
   'src/pages/memory/index.tsx',
-  'src/pages/week-plan/index.tsx'
+  'src/pages/week-plan/index.tsx',
+  'src/pages/multimodal/index.tsx',
+  'src/pages/batch/index.tsx',
+  'src/pages/admin/index.tsx'
 ];
 for (const p of pages) {
   if (!fs.existsSync(path.join(ROOT, p))) bad('missing page entry: ' + p);
 }
-if (!errs.some((e) => e.startsWith('missing page'))) ok('all 11 page entries present (V0.6×10 + V0.8 PR-1 week-plan)');
+if (!errs.some((e) => e.startsWith('missing page'))) ok('all 14 page entries present (V0.6×10 + V0.8 PR-1 + V1.0 PR-16/17/18)');
 
 /* ---------- 5. AI 6 标签 ---------- */
 const sixLabels = ['选对礼', '谈得好', '做得美', '发得准', '看得清', '改得好'];
@@ -141,6 +144,72 @@ if (!errs.some((e) => e.startsWith('V0.8 PR-4 health'))) ok('all 3 V0.8 PR-4 gif
 const pr4ServicePath = path.join(ROOT, 'src/services/ai/gift-health.ts');
 if (!fs.existsSync(pr4ServicePath)) bad('V0.8 PR-4 gift-health service file missing');
 if (!errs.some((e) => e.startsWith('V0.8 PR-4 gift-health'))) ok('V0.8 PR-4 gift-health service file present (src/services/ai/gift-health.ts)');
+
+/* ---------- 打印结果放末尾 ---------- */
+
+/* ---------- 9. V1.0 + 阶段二：platform adapter + 6 新 service ---------- */
+const platformAdapterPath = path.join(ROOT, 'src/platform/adapter.ts');
+if (!fs.existsSync(platformAdapterPath)) bad('V1.0 platform adapter missing: ' + platformAdapterPath);
+if (!errs.some((e) => e.startsWith('V1.0 platform'))) ok('V1.0 platform adapter present (src/platform/adapter.ts)');
+
+const v1Services = [
+  'src/services/ai/recommend-engine.ts',     // V1.0 PR-15
+  'src/services/ai/multimodal.ts',          // V1.0 PR-16
+  'src/services/ai/batch.ts',               // V1.0 PR-17
+  'src/services/ai/product-supply.ts',       // V1.0 PR-18
+  'src/services/payment/wechat-pay.ts',     // 阶段二-D
+  'src/services/product/cps.ts',            // 阶段二-C
+  'src/services/api/server.ts'              // 阶段二-E
+];
+for (const f of v1Services) {
+  if (!fs.existsSync(path.join(ROOT, f))) bad('V1.0 service file missing: ' + f);
+}
+if (!errs.some((e) => e.startsWith('V1.0 service'))) ok('all 7 V1.0 + 阶段二 service files present');
+
+/* 阶段二-D SECURITY gate 校验：支付文件必须含 idempotency / verifyCallback */
+const payPath = path.join(ROOT, 'src/services/payment/wechat-pay.ts');
+if (fs.existsSync(payPath)) {
+  const payBody = fs.readFileSync(payPath, 'utf8');
+  if (!payBody.includes('idempotencyKey')) bad('V1.0 阶段二-D: wechat-pay missing idempotencyKey');
+  if (!payBody.includes('verifyCallback')) bad('V1.0 阶段二-D: wechat-pay missing verifyCallback');
+  if (!payBody.includes('signature')) bad('V1.0 阶段二-D: wechat-pay missing signature');
+}
+if (!errs.some((e) => e.startsWith('V1.0 阶段二-D'))) ok('阶段二-D SECURITY gate: idempotency + verifyCallback + signature present');
+
+/* 阶段二-C: cps.ts 必须含 source: taobao/jd/pdd/mock */
+const cpsPath = path.join(ROOT, 'src/services/product/cps.ts');
+if (fs.existsSync(cpsPath)) {
+  const cpsBody = fs.readFileSync(cpsPath, 'utf8');
+  if (!cpsBody.includes("'taobao'") || !cpsBody.includes("'jd'") || !cpsBody.includes("'pdd'")) {
+    bad('V1.0 阶段二-C: cps.ts missing source enums (taobao/jd/pdd)');
+  }
+}
+if (!errs.some((e) => e.startsWith('V1.0 阶段二-C'))) ok('阶段二-C CPS source enums (taobao/jd/pdd/mock) present');
+
+/* 阶段二-B: platform adapter 必须 import @rockcent/platform/ai-gateway */
+const adapterBody = fs.existsSync(platformAdapterPath) ? fs.readFileSync(platformAdapterPath, 'utf8') : '';
+if (!adapterBody.includes('@rockcent/platform/ai-gateway')) bad('V1.0 阶段二-B: platform adapter missing ai-gateway import');
+if (!adapterBody.includes('@rockcent/platform/ai-metering')) bad('V1.0 阶段二-B: platform adapter missing ai-metering import');
+if (!adapterBody.includes('@rockcent/platform/identity')) bad('V1.0 阶段二-B: platform adapter missing identity import');
+if (!adapterBody.includes('@rockcent/platform/usage')) bad('V1.0 阶段二-B: platform adapter missing usage import');
+if (!adapterBody.includes('@rockcent/platform/web-client')) bad('V1.0 阶段二-B: platform adapter missing web-client import');
+if (!errs.some((e) => e.startsWith('V1.0 阶段二-B'))) ok('阶段二-B 5 platform packages wired in adapter (ai-gateway/ai-metering/identity/usage/web-client)');
+
+/* V1.0 PR-15: recommend-engine 必须含 PRD §6.2 7 项加权 */
+const recPath = path.join(ROOT, 'src/services/ai/recommend-engine.ts');
+if (fs.existsSync(recPath)) {
+  const recBody = fs.readFileSync(recPath, 'utf8');
+  const required = ['sceneMatch', 'relationSafety', 'peopleMatch', 'historyConversion', 'productReputation', 'commissionYield', 'inventoryStability'];
+  for (const k of required) {
+    if (!recBody.includes(k)) bad('V1.0 PR-15 recommend-engine missing factor: ' + k);
+  }
+  // 7 项权重 25 + 20 + 15 + 15 + 10 + 10 + 5 = 100
+  if (!recBody.includes('0.25') || !recBody.includes('0.20') || !recBody.includes('0.15') ||
+      !recBody.includes('0.10') || !recBody.includes('0.05')) {
+    bad('V1.0 PR-15 recommend-engine missing weights (0.25/0.20/0.15/0.10/0.05)');
+  }
+}
+if (!errs.some((e) => e.startsWith('V1.0 PR-15'))) ok('V1.0 PR-15 recommend-engine: 7 factors + PRD §6.2 weights present');
 
 /* ---------- 打印结果（唯一） ---------- */
 console.log('=== Smoke: gift-pilot-miniprogram ===');
