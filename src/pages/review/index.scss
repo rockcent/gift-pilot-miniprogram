@@ -46,3 +46,57 @@
   padding: var(--sp-2) var(--sp-3);
   border-radius: var(--radius-mini);
 }
+
+/* V0.8 PR-4: 商品健康度区块 */
+.gp-health {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.gp-health__row {
+  background-color: var(--brand-bg-card);
+  border-radius: var(--radius-card);
+  padding: var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  border-left: 4px solid var(--brand-line);
+}
+.gp-health__row--healthy {
+  border-left-color: var(--brand-green);
+}
+.gp-health__row--cooling {
+  border-left-color: var(--brand-apricot);
+}
+.gp-health__row--fading {
+  border-left-color: var(--brand-coral);
+}
+.gp-health__row-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.gp-health__dot {
+  font-size: 18px;
+  line-height: 1;
+}
+.gp-health__title {
+  flex: 1;
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--brand-ink);
+}
+.gp-health__reason {
+  font-size: var(--fs-caption);
+  color: var(--brand-ink-2);
+  line-height: 1.5;
+}
+.gp-health__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--sp-1);
+}
+.gp-health__actions .gp-btn {
+  padding: var(--sp-1) var(--sp-3);
+  font-size: var(--fs-caption);
+}

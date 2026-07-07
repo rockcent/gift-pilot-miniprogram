@@ -15,10 +15,13 @@ import type {
   WeekPlan,
   PublishTimeSlot,
   PublishTimeSlotId,
-  MultiPlatformBundle
+  MultiPlatformBundle,
+  GiftHealthFlag,
+  GiftReplacement
 } from '../types';
 import { publishTimeMock } from '../services/ai/publish-time';
 import { multiPlatformMock } from '../services/ai/multi-platform';
+import { giftHealthMock } from '../services/ai/gift-health';
 import { aiMock } from '../services/ai/mock';
 import { planMock } from '../services/ai/plan';
 import { festivalMock } from '../services/ai/festival';
@@ -62,6 +65,12 @@ interface AIState {
   loadPublishTimeSlots: () => Promise<ProviderCallResult<PublishTimeSlot[]>>;
   loadMultiPlatform: (contentId: string, giftName: string) => Promise<ProviderCallResult<MultiPlatformBundle>>;
   setPublishTimeSlot: (id: PublishTimeSlotId) => void;
+
+  /* V0.8 PR-4: 商品健康度 + 替换 */
+  giftHealthFlags: GiftHealthFlag[];
+  lastReplacement: GiftReplacement | null;
+  loadGiftHealthFlags: (giftIds: string[]) => Promise<ProviderCallResult<GiftHealthFlag[]>>;
+  replaceGift: (giftId: string) => Promise<ProviderCallResult<GiftReplacement>>;
   reset: () => void;
 }
 
@@ -78,6 +87,8 @@ export const useAIStore = create<AIState>((set, get) => ({
   festivalOpportunities: [],
   publishTimeSlots: [],
   multiPlatformContents: null,
+  giftHealthFlags: [],
+  lastReplacement: null,
 
   ask: async (raw) => {
     const res = await aiMock.ask(raw);
@@ -181,6 +192,28 @@ export const useAIStore = create<AIState>((set, get) => ({
     if (p) set({ publish: { ...p, scheduled_at: slot.scheduledAt } });
   },
 
+  /* V0.8 PR-4 */
+  loadGiftHealthFlags: async (giftIds) => {
+    const res = await giftHealthMock.fetchGiftHealthFlags(giftIds);
+    if (res.ok && res.data) set({ giftHealthFlags: res.data });
+    return res;
+  },
+
+  replaceGift: async (giftId) => {
+    const res = await giftHealthMock.replaceGift(giftId);
+    if (res.ok && res.data) {
+      // 写回 recommendation.gifts 对应索引
+      const rec = get().recommendation;
+      if (rec) {
+        const newGifts = rec.gifts.map((g) => (g.id === giftId ? res.data!.newGift : g));
+        set({ recommendation: { ...rec, gifts: newGifts }, lastReplacement: res.data });
+      } else {
+        set({ lastReplacement: res.data });
+      }
+    }
+    return res;
+  },
+
   reset: () => set({
     lastQuery: null,
     recommendation: null,
@@ -193,6 +226,8 @@ export const useAIStore = create<AIState>((set, get) => ({
     weekPlan: null,
     festivalOpportunities: [],
     publishTimeSlots: [],
-    multiPlatformContents: null
+    multiPlatformContents: null,
+    giftHealthFlags: [],
+    lastReplacement: null
   })
 }));

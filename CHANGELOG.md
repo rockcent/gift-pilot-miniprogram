@@ -141,3 +141,51 @@
 - 真实 LLM（阶段二）
 - 跨平台账号绑定 / 自动发布（V1.0）
 - 商品替换提醒（PR-4）
+
+## v0.8.0-pr4 · 2026-07-07
+
+礼有方（GiftPilot）微信小程序 V0.8 AI 经营版 / PR-4：商品替换提醒（V0.8 最后一项增量）。
+
+### Features
+- **健康度区块**：复盘页加 🎁 推荐礼物健康度（按 healthy → cooling → fading 排序，每行：🟢🟡🔴 圆点 + 礼物名 + 状态 pill + reason）
+- **1 键换品**：🟡🔴 行尾「换新品」按钮触发 `replaceGift(oldGiftId)` mock service，返回新 gift 并写回 `recommendation.gifts` 对应索引；toast 反馈「✅ 已换为 XX」
+- **健康判定规则**（mock 阶段）：🟢 orders7d ≥3 AND ctr ≥5% AND 无退款 / 🟡 7 日 1-2 单或 ctr 1-5% 或 1 退款 / 🔴 无订单或 ctr <1% 或 ≥2 退款
+
+### Engineering
+- `src/types/index.ts` 增 `GiftHealthStatus` / `GiftHealthStat` / `GiftHealthFlag` / `GiftReplacement` + `GIFT_HEALTH_STATUSES` 常量 + 2 纯函数 `judgeGiftHealth()` + `buildHealthReason()`
+- `src/services/ai/gift-health.ts` 新增（~95 行）：mock `fetchGiftHealthFlags(giftIds)` + `replaceGift(oldGiftId)` + `sortFlags()`；mock 统计基于 `giftId` hash 稳定随机
+- `src/stores/ai-store.ts` 扩：`giftHealthFlags[]` + `lastReplacement` 字段 + 2 action（`loadGiftHealthFlags` / `replaceGift`，后者自动写回 recommendation.gifts）；`reset` 同步清 2 字段
+- `src/pages/review/index.tsx` 改：加 🎁 健康区块 + useEffect auto load + onReplace 调 mock + Taro.showToast
+- `src/pages/review/index.scss` 改：3 档边框色（绿/杏/珊瑚）+ reason 样式 + 换品按钮
+
+### Testing
+- 6 个新增 jest 单测：
+  - `__tests__/services/gift-health.test.ts` (6 tests): 3 status shape + judgeGiftHealth 5 case + buildHealthReason 3 case + replaceGift 新旧对比 + sortFlags 顺序 + mock gft_001-004 不全 fading
+- 总：14 v0.6 + 13 PR-1 + 14 PR-2 + 10 PR-3 + 6 PR-4 = **57 tests in 12 suites 全部 PASS**
+
+### Guard
+- `scripts/smoke-weapp.mjs` 加 2 项 PR-4 校验（3 档 health status + service 文件）
+- 全 **12 smoke checks PASS**
+- `npm run lint` PR-4 引入 0 new error（修了一个 useMemo-在-early-return-后 的 react-hooks/rules-of-hooks）
+- `npm run build:h5` webpack 5.75.0 PASS
+
+### Documentation
+- `.specify/features/v0-8-gift-health-alert/{spec.md, plan.md, tasks.md}` 三件套（commit `12fc6d8`）
+- `dist-screenshots/review.png` 重渲染
+- 本 CHANGELOG + README V0.8 段 PR-4 ✅
+
+### V0.8 完结
+
+PR-1 → PR-2 → PR-3 → PR-4 全部 merged，V0.8 AI 经营版 6 项增量完成 4 项：
+- ✅ 周经营计划 + 节日机会 (PR-1)
+- ✅ 风格学习 (PR-2)
+- ✅ 发布时间优化 + 多平台内容 (PR-3)
+- ✅ 商品替换提醒 (PR-4)
+
+剩 PRD §13 V0.8 的 #1 一周经营计划（已含 PR-1 节日机会扩展） + #2 节日机会（PR-1 已交付）。
+
+### Out of scope（本 PR-4 不做 + V0.8 路线图完结后）
+- 真实 LLM（阶段二）
+- 真实点击 / 转化追踪（mock stats）
+- 跨礼物维度推荐模型（V1.0）
+- 自动换品（仅 1 键手动触发）

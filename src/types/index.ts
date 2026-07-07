@@ -251,3 +251,54 @@ export interface MultiPlatformBundle {
 
 export const PLATFORM_IDS: PlatformId[] = ['moments', 'xiaohongshu', 'shipinhao'];
 export const PUBLISH_TIME_SLOT_IDS: PublishTimeSlotId[] = ['tomorrow-morning', 'tonight-evening', 'day-after-noon'];
+
+/* V0.8 PR-4: 商品健康度 + 替换 */
+
+export type GiftHealthStatus = 'healthy' | 'cooling' | 'fading';
+
+export interface GiftHealthStat {
+  orders7d: number;       // 7 日订单数
+  clicks7d: number;       // 7 日点击数
+  refundsTotal: number;   // 累计退款单数
+}
+
+export interface GiftHealthFlag {
+  giftId: string;
+  status: GiftHealthStatus;
+  reason: string;         // 中文 1 句
+  stats: GiftHealthStat;
+}
+
+export interface GiftReplacement {
+  oldGiftId: string;
+  newGift: Gift;
+  replacedAt: number;
+}
+
+export const GIFT_HEALTH_STATUSES: GiftHealthStatus[] = ['healthy', 'cooling', 'fading'];
+
+/* PR-4 健康判定规则（mock 阶段固定逻辑） */
+export function judgeGiftHealth(stats: GiftHealthStat): GiftHealthStatus {
+  const clickRate = stats.clicks7d > 0 ? stats.orders7d / stats.clicks7d : 0;
+  if (stats.refundsTotal >= 2) return 'fading';
+  if (stats.orders7d === 0 || clickRate < 0.01) return 'fading';
+  if (stats.refundsTotal === 1 || stats.orders7d <= 2 || clickRate < 0.05) return 'cooling';
+  return 'healthy';
+}
+
+/* PR-4 健康 reason 文案生成 */
+export function buildHealthReason(status: GiftHealthStatus, stats: GiftHealthStat): string {
+  const ctr = stats.clicks7d > 0 ? ((stats.orders7d / stats.clicks7d) * 100).toFixed(1) : '0.0';
+  if (status === 'healthy') {
+    return `7 天 ${stats.orders7d} 单 / 点击率 ${ctr}% / 状态稳定`;
+  }
+  if (status === 'cooling') {
+    if (stats.refundsTotal === 1) return `已 1 单退款 / 7 天 ${stats.orders7d} 单 / 点击率 ${ctr}%`;
+    if (stats.orders7d <= 2) return `7 天仅 ${stats.orders7d} 笔订单 / 点击率 ${ctr}%`;
+    return `点击率 ${ctr}% 偏低 / 7 天 ${stats.orders7d} 单`;
+  }
+  // fading
+  if (stats.refundsTotal >= 2) return `已 ${stats.refundsTotal} 单退款，建议尽快替换`;
+  if (stats.orders7d === 0) return `7 天无任何订单，建议替换`;
+  return `点击率 ${ctr}% 过低，建议替换`;
+}
