@@ -3,15 +3,11 @@
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const CHROME_PATH = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const PORT = 8765;
 const BASE = `http://127.0.0.1:${PORT}`;
-const OUT_DIR = path.resolve(__dirname, '..', 'dist-screenshots');
+const OUT_DIR = path.resolve(import.meta.dirname, '..', 'dist-screenshots');
 
 const PAGES = [
   { name: 'home',             path: 'pages/index/index' },

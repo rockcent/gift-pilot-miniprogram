@@ -48,7 +48,7 @@ gift-pilot-miniprogram/
 | 框架 | Taro 3.6 + React 18 |
 | 语言 | TypeScript 5 |
 | 状态 | Zustand 4 |
-| 平台 | `@rockcent/platform`（pinned `git+https://...#platform-v1.15.2`） |
+| 平台 | `@rockcent/platform`（pinned `git+https://...#platform-v2.0.0`） |
 | 包管理 | pnpm（npm 回退） |
 
 ## 启动
