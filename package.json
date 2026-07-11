@@ -8,7 +8,6 @@
     "taro": "^3.6.0"
   },
   "packageManager": "pnpm@9.0.0",
-
   "scripts": {
     "dev:weapp": "taro build --type weapp --watch",
     "build:weapp": "taro build --type weapp",
