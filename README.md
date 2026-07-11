@@ -3,7 +3,7 @@
 > AI 礼物经营助手 · 送礼有方，推荐有数。
 
 ![status](https://img.shields.io/badge/version-v0.6.0--mvp-blue)
-![platform](https://img.shields.io/badge/platform-rockcent--v1.15.2-green)
+![platform](https://img.shields.io/badge/platform-rockcent--v2.0.0-green)
 ![node](https://img.shields.io/badge/node-%3E%3D20-blue)
 
 ## 简介
@@ -25,20 +25,32 @@ gift-pilot-miniprogram/
 │       ├── plan.md                   # 技术方案
 │       └── tasks.md                  # 任务清单
 ├── src/
-│   ├── app.tsx / app.config.ts       # Taro 入口 + TabBar 配置
-│   ├── pages/                        # 10 个核心页面
+│   ├── app.tsx / app.config.ts       # Taro 入口 + TabBar 配置（14 个页面）
+│   ├── pages/                        # 14 个页面（V0.6×10 + V0.8 PR-1 + V1.0 PR-16/17/18）
 │   ├── components/                   # 9 个核心组件
 │   ├── stores/                       # Zustand stores
-│   ├── services/                     # AI / Orders / Memory 服务（含 mock）
+│   ├── platform/adapter.ts           # V1.0 平台适配层（5 个 @rockcent/platform 子包）
+│   ├── services/                     # AI / Orders / Memory / Product / Payment / API 服务
+│   │   ├── ai/                       #   7 个：recommend-engine / multimodal / batch / product-supply 等
+│   │   ├── payment/wechat-pay.ts     #   阶段二-D SECURITY gate（idempotency / verifyCallback / signature）
+│   │   ├── product/cps.ts            #   阶段二-C CPS 商品库（taobao/jd/pdd/mock）
+│   │   └── api/server.ts             #   后端 mock client
 │   ├── types/                        # 领域类型
 │   ├── utils/                        # money / id / trace
 │   ├── data/                         # mock 数据
 │   └── styles/                       # 视觉 token + 全局
-├── __tests__/                        # Jest 单测
-├── scripts/                          # smoke / platform-deps / no-sensitive
+├── __tests__/                        # Jest 单测（19 suites / 87 tests）
+├── scripts/
+│   ├── smoke-weapp.mjs               # 18 项 smoke 检查（platform + 14 pages + SECURITY gate）
+│   ├── screenshot-h5.mjs             # 14 张 H5 截图
+│   ├── check-platform-deps-local.mjs
+│   ├── check-no-sensitive.mjs
+│   ├── deploy-preflight.sh           # 部署预检（8 项）
+│   └── deploy-production.sh          # 部署到 aliyun-rockcent-prod:/h5/
+├── nginx/gift.rockcent.com.conf      # 与网页端共享 conf，含 /h5/ 子路径块
 ├── .github/workflows/ci.yml          # GitHub Actions
-├── dist-screenshots/                 # H5 渲染的 10 张视觉预览
-└── package.json                      # 平台 pin @rockcent/platform
+├── dist-screenshots/                 # H5 渲染的 14 张视觉预览
+└── package.json                      # 平台 pin @rockcent/platform v2.0.0
 ```
 
 ## 技术栈
@@ -70,14 +82,19 @@ pnpm run check:no-sensitive        # 敏感信息扫描
 2. 复制 `project.config.example.json` → `project.config.json`，填入真实 AppID（不入仓）；
 3. 微信开发者工具 → 导入项目 → 项目目录选 `dist/`。
 
-## MVP 范围（V0.6）
+## MVP 范围（V0.6 → V0.8 → V1.0）
 
-- ✅ 10 个核心页面（AI 对话 / 推荐 / 内容 / 封面 / 发布确认 / 发布成功 / 订单 / 复盘 / 下一步 / AI 记忆）
+- ✅ **V0.6** 10 个核心页面（AI 对话 / 推荐 / 内容 / 封面 / 发布确认 / 发布成功 / 订单 / 复盘 / 下一步 / AI 记忆）
+- ✅ **V0.8 AI 经营版** 4 PRs（PR-1 周计划 + PR-2 风格 + PR-3 发布时间 + PR-4 商品健康度）
+- ✅ **V1.0 平台对接** 4 PRs（PR-15 推荐引擎 7 因子 + PR-16 多模态输入 + PR-17 AI 批量 + PR-18 平台管理）
+- ✅ **阶段二** A→E 全量适配（5 个平台包接入 + 7 个 service + CPS + SECURITY gate）
 - ✅ 9 个核心组件 + 视觉 token（策绿 #23B26D / 礼杏 #F6C98D / 心意珊瑚 #F47C6C / 暖白 #FAF9F6）
-- ✅ Zustand stores + mock 数据 + mock AI 适配（接口形态 = 真实 ProviderCallResult）
-- ✅ 4 个 smoke 脚本（平台 pin / 敏感扫描 / 整数金额 / 6 大 AI 标签）
+- ✅ Zustand stores + mock 数据 + mock AI 适配（接口形态 = 真实 `ProviderCallResult<T>`）
+- ✅ **18 项 smoke 检查**（平台 pin / 敏感扫描 / 整数金额 / 6 大 AI 标签 / 14 页面 / SECURITY gate）
+- ✅ **19 suites / 87 tests** Jest 单测全 PASS
 - ✅ GitHub Actions 最小 CI
-- ✅ H5 视觉预览（10 张截图，见 `dist-screenshots/README.md`）
+- ✅ H5 视觉预览（14 张截图，见 `dist-screenshots/`）
+- ✅ **阿里云部署脚本**（`npm run deploy:{preflight,dry-run,production}` → aliyun `/h5/` 子路径）
 
 ## V0.8 路线图 AI 经营版（.specify/features/v0-8-ai-operation/）
 
@@ -109,15 +126,26 @@ pnpm run check:no-sensitive        # 敏感信息扫描
   - 6 个新增 jest 单测（`gift-health` 6 含纯函数判定 + mock service + 排序 + mock 数据）
   - smoke 升级到 12/12 check PASS（加 3 档 health status + service 文件）
 
-- ⏳ 阶段二：接通真实微信云开发后端 + 真实 LLM（OpenAI 兼容）+ 真实商品库
-- ⏳ 阶段三：礼有方 Pro
-- ⏳ 阶段四：礼有方云（SaaS）
+- ✅ **V1.0 平台对接** 4 PRs（架构层 + 数据 mock；真实凭证需 PM 提供）
+  - **PR-15** AI 推荐引擎 7 因子（PRD §6.2）：content-fit 0.25 / relation 0.20 / recency 0.15 / inventory 0.10 / margin 0.10 / sentiment 0.10 / risk 0.10
+  - **PR-16** 多模态输入（PRD §6.1）：文字 / 语音 / 商品截图 / 聊天截图 / 商品链接 / 商品图片 6 模态 → 结构化 GiftQuery
+  - **PR-17** AI 批量任务中心：批量生成 / 批量发布 / 批量复盘 3 类，并发可调
+  - **PR-18** 平台管理后台（mini 端简化版）：身份 / 商品供给策略 / CPS 商品库 / 微信支付订单 / usage 监控
+- ✅ **阶段二-A** 平台适配层 `src/platform/adapter.ts`：5 个 `@rockcent/platform` 子包接线
+  - `ai-gateway` + `ai-metering` + `identity` + `usage` + `web-client`
+- ✅ **阶段二-B** 7 个新 service：recommend-engine / multimodal / batch / product-supply / wechat-pay / cps / api-server
+- ✅ **阶段二-C** CPS 商品库 mock（source: taobao / jd / pdd / mock）
+- ✅ **阶段二-D** SECURITY gate：wechat-pay 含 `idempotencyKey` + `verifyCallback` + `signature`
+- ✅ **阶段二-E** 平台 pin 升 v2.0.0（Node 22 floor + dirname-ems codemod）
+- ⏳ 阶段三：接通真实微信云开发后端 + 真实 LLM（OpenAI 兼容）+ 真实商品库
+- ⏳ 阶段四：礼有方 Pro
+- ⏳ 阶段五：礼有方云（SaaS）
 
 ## 平台合规
 
 礼有方小程序**严格遵循** rockcent 平台规范：
 
-- `@rockcent/platform` 通过 `git+https://github.com/rockcent/rockcent-platform.git#platform-v1.15.2` 锁定，**禁止**使用 `github:` / `git+ssh:` / `file:` 形式
+- `@rockcent/platform` 通过 `git+https://github.com/rockcent/rockcent-platform.git#platform-v2.0.0` 锁定，**禁止**使用 `github:` / `git+ssh:` / `file:` 形式
 - 金额统一用「分」整数（`_fen` 后缀字段），展示时 `/100`
 - 订单状态机 `CREATED → PENDING → PAID → CLOSED`，MVP 实现前三态
 - 推荐结果保存为不可变快照，便于复盘归因

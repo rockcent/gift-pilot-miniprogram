@@ -1,0 +1,68 @@
+.gp-batch__chips {
+  display: flex;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+.gp-batch__chip {
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius-pill);
+  background-color: var(--brand-bg-card);
+  border: 1.5px solid var(--brand-line);
+  font-size: var(--fs-caption);
+}
+.gp-batch__chip--active {
+  border-color: var(--brand-green);
+  background-color: var(--brand-green);
+  color: #fff;
+}
+.gp-batch__concurrency {
+  display: flex;
+  gap: var(--sp-2);
+}
+.gp-batch__concurrency-chip {
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius-mini);
+  background-color: var(--brand-bg-card);
+  border: 1px solid var(--brand-line);
+  font-size: var(--fs-caption);
+}
+.gp-batch__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.gp-batch__item {
+  background-color: var(--brand-bg-card);
+  border-radius: var(--radius-mini);
+  padding: var(--sp-2);
+  border: 1px solid var(--brand-line);
+}
+.gp-batch__item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.gp-batch__item-label {
+  font-size: var(--fs-body);
+  color: var(--brand-ink);
+}
+.gp-batch__item-status {
+  font-size: 16px;
+}
+.gp-batch__progress-bar {
+  background-color: var(--brand-bg);
+  border-radius: var(--radius-mini);
+  height: 6px;
+  overflow: hidden;
+  margin: var(--sp-1) 0;
+}
+.gp-batch__progress-fill {
+  height: 100%;
+  background-color: var(--brand-green);
+  transition: width 0.2s ease;
+}
+.gp-batch__item-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
