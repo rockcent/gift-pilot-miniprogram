@@ -110,8 +110,12 @@ export default function MemoryPage() {
         </View>
 
         <View className="gp-page__cta-row">
-          <View className="gp-btn gp-btn--ghost" onClick={onClear}>
-            <Text>清空记忆</Text>
+          <View
+            className="gp-btn gp-btn--ghost"
+            onClick={onClear}
+            aria-label="一键清除 AI 记忆（宪法 §4.6）"
+          >
+            <Text>🗑️ 一键清除记忆</Text>
           </View>
           <View className="gp-btn gp-btn--primary gp-btn--block" onClick={onEditAll}>
             <Text>继续我的偏好</Text>

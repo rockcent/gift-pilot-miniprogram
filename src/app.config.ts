@@ -10,7 +10,10 @@ export default defineAppConfig({
     'pages/review/index',
     'pages/next-plan/index',
     'pages/memory/index',
-    'pages/week-plan/index'
+    'pages/week-plan/index',
+    'pages/multimodal/index',
+    'pages/batch/index',
+    'pages/admin/index'
   ],
   window: {
     backgroundTextStyle: 'dark',
