@@ -188,9 +188,9 @@ export function persistLocal<T>(key: string, value: T): boolean {
 export function loadLocal<T>(key: string, fallback: T): T {
   if (!storage) return fallback;
   try {
-    const raw = storage.get(key);
-    if (raw == null) return fallback;
-    return safeJsonParse(String(raw), fallback) as T;
+    /* createStorage.get 内部已 safeJsonParse，无需 String()+二次 parse */
+    const raw = storage.get<T | null>(key, null);
+    return raw == null ? fallback : (raw as T);
   } catch {
     return fallback;
   }
