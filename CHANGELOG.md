@@ -221,3 +221,48 @@ PR-1 → PR-2 → PR-3 → PR-4 全部 merged，V0.8 AI 经营版 6 项增量完
 ### Out of scope（本升级 PR 不做）
 - 真实 LLM 接入（V1.0 PR-6 待启动）
 - 真实商品库 / 支付 / 后端（V1.0 待启动）
+
+## v1.0.0-stage2 · 2026-07-08
+
+礼有方（GiftPilot）微信小程序 V1.0 平台对接 + 阶段二 A→E mega-PR。
+架构层对齐 V1.0，runtime 数据 mock；真实凭证需 PM 提供后接入。
+
+### Features
+- **PR-15** AI 推荐引擎 7 因子（PRD §6.2）：content-fit / relation / recency / inventory / margin / sentiment / risk，加权排序
+- **PR-16** 多模态输入页：6 模态 → 结构化 GiftQuery
+- **PR-17** AI 批量任务中心：批量生成 / 发布 / 复盘，并发可调
+- **PR-18** 平台管理后台（mini 端简化版）：身份 / 商品供给 / CPS / 微信支付 / usage 监控
+- **阶段二-A** 平台适配��� `src/platform/adapter.ts`：5 个 `@rockcent/platform` 子包接线
+- **阶段二-B** 7 个新 service：recommend-engine / multimodal / batch / product-supply / wechat-pay / cps / api-server
+- **阶段二-C** CPS 商品库 mock（source: taobao / jd / pdd / mock）
+- **阶段二-D** SECURITY gate：wechat-pay 含 `idempotencyKey` + `verifyCallback` + `signature`
+
+### Pages
+- 11 → 14 个页面（新增 `pages/multimodal/index` + `pages/batch/index` + `pages/admin/index`）
+- 3 张新增截图：`multimodal.png` / `batch.png` / `admin.png`
+
+### Engineering
+- 平台 pin：`@rockcent/platform` 锁定 `platform-v2.0.0`（Node 22 floor + dirname-ems codemod）
+- 新增 `nginx/gift.rockcent.com.conf`（与网页端共享 conf，含 `/h5/` 子路径块）
+- 新增 `scripts/deploy-preflight.sh`（8 项预检）+ `scripts/deploy-production.sh`（rsync + nginx reload）
+- `package.json` 加 3 个 deploy script：`deploy:preflight` / `deploy:dry-run` / `deploy:production`
+- smoke 升级到 **18/18 PASS**（含 14 页面 + 阶段二-D SECURITY gate + 阶段二-C CPS enums + 阶段二-B 5 平台包）
+
+### 部署目标
+- 主机：`rockops@8.138.150.206`（aliyun-rockcent-prod）
+- 路径：`/usr/share/nginx/giftpilot/h5/dist/`（子路径 `/h5/`，与网页端共 server block）
+- 公网 URL：`https://gift.rockcent.com/h5/`
+- 部署命令：`npm run deploy:production`（PM Mac 终端，沙箱拦截 SSH）
+
+### 验证
+- `npm test`: **87 tests in 19 suites PASS**（V0.6×10 + V0.8 PR-1~4 + V1.0 PR-15~18 + 阶段二-A→E）
+- `npm run smoke:weapp`: **18/18 checks PASS**
+- `npm run build:h5`: webpack 5.75.0 PASS（含 Taro 14 页面）
+- `npm run screenshot:h5`: **14/14 PNG OK**（含 multimodal / batch / admin）
+- Node: **v22.22.2**
+
+### Out of scope（本 PR 不做）
+- 真实 LLM / 真实商品库 / 真实支付 / 真实后端（待 PM 提供凭证）
+- 真实多模态 ASR/OCR/image embedding（mock 文本）
+- 真实批量任务队列（mock Promise.all）
+- 真实机构管理 / 推客评分（V1.1/V1.2 后置）

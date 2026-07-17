@@ -18,8 +18,12 @@
     "smoke:weapp": "node ./scripts/smoke-weapp.mjs",
     "check:platform-deps": "node /Volumes/Rock2/rockcent-platform/scripts/check-platform-dependency-specs.js . || node ./scripts/check-platform-deps-local.mjs",
     "check:no-sensitive": "node ./scripts/check-no-sensitive.mjs",
-    "build:h5": "taro build --type h5",
-    "screenshot:h5": "node scripts/screenshot-h5.mjs"
+    "build:h5": "taro build --type h5 && node scripts/post-build-h5.mjs",
+    "screenshot:h5": "node scripts/screenshot-h5.mjs",
+    "deploy:preflight": "bash scripts/deploy-preflight.sh",
+    "deploy:dry-run": "RSYNC_DRY_RUN=1 bash scripts/deploy-production.sh",
+    "deploy:production": "bash scripts/deploy-production.sh",
+    "deploy:smoke": "bash scripts/post-deploy-smoke.sh"
   },
   "dependencies": {
     "@tarojs/components": "^3.6.30",

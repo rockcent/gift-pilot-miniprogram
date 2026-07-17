@@ -1,8 +1,9 @@
 module.exports = {
   testEnvironment: 'jsdom',
+  setupFiles: ['<rootDir>/jest.setup.js'],
   testMatch: ['**/__tests__/**/*.test.ts'],
   transform: {
-    '^.+\\.tsx?$': ['babel-jest', { configFile: './babel.config.js' }]
+    '^.+\\.(tsx?|js|jsx|mjs)$': ['babel-jest', { configFile: './babel.config.js' }]
   },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
@@ -13,5 +14,5 @@ module.exports = {
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
     '^@data/(.*)$': '<rootDir>/src/data/$1'
   },
-  transformIgnorePatterns: ['/node_modules/(?!(@rockcent|taro)/)']
+  transformIgnorePatterns: ['/node_modules/(?!(@rockcent|@opentelemetry|@ai-sdk|ai|eventsource-parser|taro)/)']
 };
