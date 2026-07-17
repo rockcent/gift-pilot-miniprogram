@@ -14,14 +14,14 @@
 |---|---|
 | 框架 | Taro 3.6 + React 18 + TS 5（复用 v0.8） |
 | 状态 | Zustand 4（复用 v0.8 store） |
-| **平台** | **`@rockcent/platform` v2.0.0**（PR-5 已升级）5 个子包：ai-gateway / ai-metering / identity / usage / web-client |
+| **平台** | **`@rockcent/platform` v1.20.0**（PR-5 已升级）5 个子包：ai-gateway / ai-metering / identity / usage / web-client |
 | 部署 | Taro H5 + rsync → aliyun nginx `/h5/` 子路径 |
 | CI | GitHub Actions deploy workflow（`workflow_dispatch` 手动触发 + `dry_run` 选项） |
 | 数据 | 全 mock（runtime）；真实凭证接入 = 阶段三 |
 
 **核心约束**（来自宪法 + 平台规范）：
 
-1. **平台 pin 不可降级**：v2.0.0 是消费端当前稳定线，**禁止** pin v1.x 或 main
+1. **平台 pin 不可降级**：v1.20.0 是消费端当前稳定线，**禁止** pin v1.x 或 main
 2. **ProviderCallResult 形态**：所有 v1.0 service 内部 mock，但接口签名 = 真实 `ProviderCallResult<T>`，便于阶段三零摩擦切真实实现
 3. **SECURITY gate 不可绕过**：金额 `_fen` 正整数 / idempotencyKey / signature / verifyCallback — 任何 mock 也必须保留这 4 项
 4. **Taro 3.x publicPath 漏传 bug**：用 `scripts/post-build-h5.mjs` 后置重写（详见 D-Deploy-3）
@@ -32,7 +32,7 @@
 
 | 类型 | 路径 | 改动 | 关联 PR |
 |---|---|---|---|
-| 改 | `package.json` | `@rockcent/platform` pin → `platform-v2.0.0`；加 `deploy:*` 4 个 script；`build:h5` 拼 post-build | PR-5 + mega |
+| 改 | `package.json` | `@rockcent/platform` pin → `platform-v1.20.0`；加 `deploy:*` 4 个 script；`build:h5` 拼 post-build | PR-5 + mega |
 | 改 | `package-lock.json` | taro engines `>=20 → >=22`（PR-5 codemod） | mega |
 | 改 | `src/app.config.ts` | pages 11 → 14（+multimodal / batch / admin） | mega |
 | 改 | `src/index.html` | 保留 Taro 默认模板（post-build 接管资源路径） | mega |
@@ -48,7 +48,7 @@
 | **新** | `src/pages/multimodal/{index.tsx,index.scss}` | PR-16 多模态输入页 | PR-16 |
 | **新** | `src/pages/batch/{index.tsx,index.scss}` | PR-17 AI 批量任务中心 | PR-17 |
 | **新** | `src/pages/admin/{index.tsx,index.scss}` | PR-18 平台管理后台 mini 简化版 | PR-18 |
-| 改 | `README.md` | V0.6 → V0.8 → V1.0 + 阶段二 范围段；平台 v2.0.0 + 14 页面 + 部署脚本 | mega |
+| 改 | `README.md` | V0.6 → V0.8 → V1.0 + 阶段二 范围段；平台 v1.20.0 + 14 页面 + 部署脚本 | mega |
 | 改 | `CHANGELOG.md` | v1.0.0-stage2 段（Features / Pages / Engineering / 部署目标 / 验证 / Out of scope） | mega |
 | **新** | `nginx/gift.rockcent.com.conf` | 与网页端共享 server block，新增 `location ^~ /h5/` + 3 同级子 location | mega |
 | **新** | `scripts/deploy-preflight.sh` | 8 项预检（含 SKIP_MAIN_CHECK 覆盖项） | mega |
@@ -254,7 +254,7 @@ jobs:
 
 ## 严守边界
 
-- ❌ 未触动 platform v2.0.0 pin / ��台 5 包依赖
+- ❌ 未触动 platform v1.20.0 pin / ��台 5 包依赖
 - ❌ 未触动 v0.6 / v0.8 业务代码（只补 deploy + post-build 工具链）
 - ❌ 未合并 PR #6（AGENTS.md §III 等 PM 显式指令）
 - ❌ 未触 pay-core / 数据库 / 真实凭证

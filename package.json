@@ -26,6 +26,7 @@
     "deploy:smoke": "bash scripts/post-deploy-smoke.sh"
   },
   "dependencies": {
+    "@rockcent/platform": "git+https://github.com/rockcent/rockcent-platform.git#platform-v1.20.0",
     "@tarojs/components": "^3.6.30",
     "@tarojs/helper": "^3.6.30",
     "@tarojs/plugin-framework-react": "^3.6.30",
@@ -36,8 +37,7 @@
     "@tarojs/taro": "^3.6.30",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "zustand": "^4.5.0",
-    "@rockcent/platform": "git+https://github.com/rockcent/rockcent-platform.git#platform-v2.0.0"
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",

@@ -10,8 +10,8 @@
 
 ## 阶段 A：前置（V1.0 启动条件）
 
-- [x] **T-A1** 平台 v2.0.0 tag 存在（rockcent-platform `7574f41`）
-- [x] **T-A2** 平台升级 PR-5 已 merged（`909b550` chore: upgrade @rockcent/platform v1.15.2 → v2.0.0）
+- [x] **T-A1** 平台 v1.20.0 tag 存在（rockcent-platform `7574f41`）
+- [x] **T-A2** 平台升级 PR-5 已 merged（`909b550` chore: upgrade @rockcent/platform v1.15.2 → v1.20.0）
 - [x] **T-A3** `.specify/features/v1-platform-integration/` 目录已建（retroactive）
 
 ## 阶段 B：阶段二-A 平台适配层（7 包接线）
@@ -68,9 +68,9 @@
 - [x] **T-I2** 订单生命周期：CREATED → PENDING → PAID → CLOSED
 - [x] **T-I3** 单测：`__tests__/services/payment/wechat-pay.test.ts`
 
-## 阶段 J：阶段二-E 平台 pin v2.0.0
+## 阶段 J：阶段二-E 平台 pin v1.20.0
 
-- [x] **T-J1** `package.json` `@rockcent/platform` → `git+https://...#platform-v2.0.0`
+- [x] **T-J1** `package.json` `@rockcent/platform` → `git+https://...#platform-v1.20.0`
 - [x] **T-J2** 依赖 Node 22 floor（PR-5 codemod；后续 lockfile 同步 `>=22`）
 - [x] **T-J3** consumer PR 引用平台 commit + used modules + validation commands（PR-5 + PR-6 都做到）
 
@@ -99,7 +99,7 @@
 
 - [x] **T-N1** `scripts/smoke-weapp.mjs` 升级 11 → 14 页面校验 + 5 平台包 wiring + SECURITY gate keyword + CPS enum
 - [x] **T-N2** `scripts/screenshot-h5.mjs` PAGES 11 → 14
-- [x] **T-N3** `README.md` V0.6 → V0.8 → V1.0 + 阶段二 范围段 + 平台 v2.0.0 + 14 页面 + 部署脚本
+- [x] **T-N3** `README.md` V0.6 → V0.8 → V1.0 + 阶段二 范围段 + 平台 v1.20.0 + 14 页面 + 部署脚本
 - [x] **T-N4** `CHANGELOG.md` v1.0.0-stage2 段（Features / Pages / Engineering / 部署目标 / 验证 / Out of scope）
 - [x] **T-N5** `cloud-server-ops/CURRENT_WORK.md` 顶部插入本轮接手行（CI_RELEASE_STANDARD §post-deploy mandate）
 

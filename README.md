@@ -3,7 +3,7 @@
 > AI 礼物经营助手 · 送礼有方，推荐有数。
 
 ![status](https://img.shields.io/badge/version-v0.6.0--mvp-blue)
-![platform](https://img.shields.io/badge/platform-rockcent--v2.0.0-green)
+![platform](https://img.shields.io/badge/platform-rockcent--v1.20.0-green)
 ![node](https://img.shields.io/badge/node-%3E%3D20-blue)
 
 ## 简介
@@ -50,7 +50,7 @@ gift-pilot-miniprogram/
 ├── nginx/gift.rockcent.com.conf      # 与网页端共享 conf，含 /h5/ 子路径块
 ├── .github/workflows/ci.yml          # GitHub Actions
 ├── dist-screenshots/                 # H5 渲染的 14 张视觉预览
-└── package.json                      # 平台 pin @rockcent/platform v2.0.0
+└── package.json                      # 平台 pin @rockcent/platform v1.20.0
 ```
 
 ## 技术栈
@@ -60,7 +60,7 @@ gift-pilot-miniprogram/
 | 框架 | Taro 3.6 + React 18 |
 | 语言 | TypeScript 5 |
 | 状态 | Zustand 4 |
-| 平台 | `@rockcent/platform`（pinned `git+https://...#platform-v2.0.0`） |
+| 平台 | `@rockcent/platform`（pinned `git+https://...#platform-v1.20.0`） |
 | 包管理 | pnpm（npm 回退） |
 
 ## 启动
@@ -136,7 +136,7 @@ pnpm run check:no-sensitive        # 敏感信息扫描
 - ✅ **阶段二-B** 7 个新 service：recommend-engine / multimodal / batch / product-supply / wechat-pay / cps / api-server
 - ✅ **阶段二-C** CPS 商品库 mock（source: taobao / jd / pdd / mock）
 - ✅ **阶段二-D** SECURITY gate：wechat-pay 含 `idempotencyKey` + `verifyCallback` + `signature`
-- ✅ **阶段二-E** 平台 pin 升 v2.0.0（Node 22 floor + dirname-ems codemod）
+- ✅ **阶段二-E** 平台 pin 升 v1.20.0（Node 22 floor + dirname-ems codemod）
 - ⏳ 阶段三：接通真实微信云开发后端 + 真实 LLM（OpenAI 兼容）+ 真实商品库
 - ⏳ 阶段四：礼有方 Pro
 - ⏳ 阶段五：礼有方云（SaaS）
@@ -145,7 +145,7 @@ pnpm run check:no-sensitive        # 敏感信息扫描
 
 礼有方小程序**严格遵循** rockcent 平台规范：
 
-- `@rockcent/platform` 通过 `git+https://github.com/rockcent/rockcent-platform.git#platform-v2.0.0` 锁定，**禁止**使用 `github:` / `git+ssh:` / `file:` 形式
+- `@rockcent/platform` 通过 `git+https://github.com/rockcent/rockcent-platform.git#platform-v1.20.0` 锁定，**禁止**使用 `github:` / `git+ssh:` / `file:` 形式
 - 金额统一用「分」整数（`_fen` 后缀字段），展示时 `/100`
 - 订单状态机 `CREATED → PENDING → PAID → CLOSED`，MVP 实现前三态
 - 推荐结果保存为不可变快照，便于复盘归因

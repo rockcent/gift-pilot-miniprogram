@@ -46,7 +46,7 @@
 | **阶段二-B** | 7 新 service 形态 = ProviderCallResult | 7 个 service 文件 | — | recommend-engine / multimodal / batch / product-supply / wechat-pay / cps / api-server | P0 |
 | **阶段二-C** | CPS 商品库 mock | 新 `services/product/cps.ts` | — | source enum: taobao/jd/pdd/mock | P1 |
 | **阶段二-D** | 支付 SECURITY gate | 新 `services/payment/wechat-pay.ts` | — | idempotencyKey + verifyCallback + signature | P0 |
-| **阶段二-E** | 平台 pin 升 v2.0.0 | `package.json` 改 pin | — | — | P0 |
+| **阶段二-E** | 平台 pin 升 v1.20.0 | `package.json` 改 pin | — | — | P0 |
 
 **等级定义**：
 - P0 = 平台对接必要项，缺则阶段三无法启动
@@ -97,7 +97,7 @@
 
 ### 宪法级（不变量）
 
-- [x] §6.1 平台 pin 形式 `git+https://...#platform-v2.0.0`（PR-5 `909b550`）
+- [x] §6.1 平台 pin 形式 `git+https://...#platform-v1.20.0`（PR-5 `909b550`）
 - [x] §6.4 平台依赖 lockfile 严格 git+https（无 github: / git+ssh: / file:）
 - [x] §6.5 不复制平台能力——adapter.ts 只 re-export，不写副本
 - [x] §6.7 支付 SECURITY gate：金额正整数 / idempotencyKey / signature
@@ -171,7 +171,7 @@
 
 ### 阶段二-E 验收
 
-- [x] `package.json` `@rockcent/platform` pin 升 `platform-v2.0.0`
+- [x] `package.json` `@rockcent/platform` pin 升 `platform-v1.20.0`
 - [x] 依赖 Node 22 floor（PR-5 codemod）
 - [x] 消费者 PR 含平台 commit + used modules + validation commands
 

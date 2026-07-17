@@ -190,16 +190,16 @@ PR-1 → PR-2 → PR-3 → PR-4 全部 merged，V0.8 AI 经营版 6 项增量完
 - 跨礼物维度推荐模型（V1.0）
 - 自动换品（仅 1 键手动触发）
 
-## v2.0.0-platform-upgrade · 2026-07-07
+## v1.20.0-platform-upgrade · 2026-07-07
 
-礼有方（GiftPilot）微信小程序 platform v1.15.2 → **v2.0.0** 升级。
+礼有方（GiftPilot）微信小程序 platform v1.15.2 → **v1.20.0** 升级。
 
 ### 范围
-- 仅消费侧升级（per AGENTS.md + migration-guide-v2.0.0.md）
+- 仅消费侧升级（per AGENTS.md + migration-guide-v1.20.0.md）
 - 3 项 OQ-1 breaking 适配
 
 ### 改动
-- `@rockcent/platform` pin: `platform-v1.15.2` → **`platform-v2.0.0`** (commit `7574f41`)
+- `@rockcent/platform` pin: `platform-v1.15.2` → **`platform-v1.20.0`** (commit `7574f41`)
 - `engines.node`: `>=20.0.0` → **`>=22.0.0`**（OQ-1 ②）
 - `scripts/screenshot-h5.mjs`: codemod 自动应用 dirname-ems（OQ-1 ②）
   - 删 `__filename` / `__dirname` polyfill
@@ -242,7 +242,7 @@ PR-1 → PR-2 → PR-3 → PR-4 全部 merged，V0.8 AI 经营版 6 项增量完
 - 3 张新增截图：`multimodal.png` / `batch.png` / `admin.png`
 
 ### Engineering
-- 平台 pin：`@rockcent/platform` 锁定 `platform-v2.0.0`（Node 22 floor + dirname-ems codemod）
+- 平台 pin：`@rockcent/platform` 锁定 `platform-v1.20.0`（Node 22 floor + dirname-ems codemod）
 - 新增 `nginx/gift.rockcent.com.conf`（与网页端共享 conf，含 `/h5/` 子路径块）
 - 新增 `scripts/deploy-preflight.sh`（8 项预检）+ `scripts/deploy-production.sh`（rsync + nginx reload）
 - `package.json` 加 3 个 deploy script：`deploy:preflight` / `deploy:dry-run` / `deploy:production`
