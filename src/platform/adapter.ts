@@ -196,6 +196,24 @@ export function loadLocal<T>(key: string, fallback: T): T {
   }
 }
 
+export function removeLocal(key: string): void {
+  if (!storage) return;
+  try {
+    storage.remove(key);
+  } catch {
+    /* 静默：清除失败不影响主流程 */
+  }
+}
+
+export function clearLocalNamespace(): void {
+  if (!storage) return;
+  try {
+    storage.clear();
+  } catch {
+    /* 静默 */
+  }
+}
+
 /* ---------- 6. ProviderCallResult helper ---------- */
 
 export function okResult<T>(data: T, usage?: AIUsage, cost?: number): ProviderCallResult<T> {

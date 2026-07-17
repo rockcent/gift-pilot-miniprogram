@@ -3,6 +3,8 @@ import Taro from '@tarojs/taro';
 import { AIMemoryRow } from '../../components/ai-memory-row/ai-memory-row';
 import { useMemoryStore } from '../../stores/memory-store';
 import { styleMock } from '../../services/ai/style';
+import { exportAllData } from '../../platform/consent';
+import { ConsentBanner } from '../../components/consent/ConsentBanner';
 import './index.scss';
 
 export default function MemoryPage() {
@@ -111,6 +113,23 @@ export default function MemoryPage() {
 
         <View className="gp-page__cta-row">
           <View
+            className="gp-btn gp-btn--secondary"
+            onClick={() => {
+              const data = exportAllData();
+              const content = JSON.stringify(data, null, 2);
+              Taro.setClipboardData({ data: content, success: () => {
+                Taro.showModal({
+                  title: '已复制到剪贴板',
+                  content: `导出 ${data.exportedAt}：包含全部 memory + style-profile + consent。已复制 JSON 到剪贴板，请粘贴保存。`,
+                  showCancel: false
+                });
+              }});
+            }}
+            aria-label="导出我的全部数据"
+          >
+            <Text>📦 导出我的数据</Text>
+          </View>
+          <View
             className="gp-btn gp-btn--ghost"
             onClick={onClear}
             aria-label="一键清除 AI 记忆（宪法 §4.6）"
@@ -122,6 +141,7 @@ export default function MemoryPage() {
           </View>
         </View>
       </ScrollView>
+      <ConsentBanner />
     </View>
   );
 }
