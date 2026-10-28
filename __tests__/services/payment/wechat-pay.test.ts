@@ -57,4 +57,51 @@ describe('services/payment/wechat-pay (阶段二-D)', () => {
     await wechatPayMock.create({ giftId: 'gx', publishId: null, amountFen: 1000, commissionFen: 300 });
     expect(wechatPayMock.list().length).toBe(before + 1);
   });
+
+  test('§4.3 金额不一致被拒（AMOUNT_MISMATCH）', async () => {
+    const r = await wechatPayMock.create({
+      giftId: 'g1', publishId: 'p1', amountFen: 19900, commissionFen: 5970, expectedAmountFen: 20000
+    });
+    expect(r.ok).toBe(false);
+    expect(r.error?.code).toBe('AMOUNT_MISMATCH');
+  });
+
+  test('§4.3 金额一致时通过', async () => {
+    const r = await wechatPayMock.create({
+      giftId: 'g1', publishId: 'p1', amountFen: 19900, commissionFen: 5970, expectedAmountFen: 19900
+    });
+    expect(r.ok).toBe(true);
+  });
+
+  test('§4.5 归因字段落库 content_id / recommendation_id', async () => {
+    const r = await wechatPayMock.create({
+      giftId: 'g1', publishId: 'p1', contentId: 'c1', recommendationId: 'r1',
+      amountFen: 19900, commissionFen: 5970
+    });
+    expect(r.ok).toBe(true);
+    expect(r.data!.content_id).toBe('c1');
+    expect(r.data!.recommendation_id).toBe('r1');
+  });
+
+  test('SECURITY 幂等：相同 idempotencyKey 返回已有订单', async () => {
+    const ik = 'ik_dedup_test';
+    const a = await wechatPayMock.create({ giftId: 'g1', publishId: null, amountFen: 100, commissionFen: 30, idempotencyKey: ik });
+    const b = await wechatPayMock.create({ giftId: 'g1', publishId: null, amountFen: 100, commissionFen: 30, idempotencyKey: ik });
+    expect(a.ok && b.ok).toBe(true);
+    expect(b.data!.id).toBe(a.data!.id);
+  });
+
+  test('退款终态 REFUNDED（§4.2）', async () => {
+    const c = await wechatPayMock.create({ giftId: 'g3', publishId: null, amountFen: 500, commissionFen: 150 });
+    await wechatPayMock.prepare(c.data!.id);
+    await wechatPayMock.pay(c.data!.id, 'code');
+    const r = await wechatPayMock.refund(c.data!.id);
+    expect(r.data!.status).toBe('REFUNDING');
+    const done = await wechatPayMock.completeRefund(c.data!.id);
+    expect(done.ok).toBe(true);
+    expect(done.data!.status).toBe('REFUNDED');
+    expect(done.data!.refundedAt).toBeGreaterThan(0);
+    const again = await wechatPayMock.completeRefund(c.data!.id);
+    expect(again.ok).toBe(false);
+  });
 });

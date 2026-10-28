@@ -14,6 +14,8 @@ import gifts from '../../data/mock-gifts.json';
 import contents from '../../data/mock-content.json';
 import { nextId } from '../../utils/id';
 import { errResult, okResult } from '../../utils/trace';
+import type { AIUsage } from '@rockcent/platform/ai';
+import { tokensFor } from '../../platform/adapter';
 
 function simulate(ms = 220): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
@@ -81,7 +83,7 @@ export const aiMock = {
       gifts,
       match_label: `为你推荐 ${gifts.length} 份合适的礼物`
     };
-    return okResult(snap);
+    return okResult(snap, estimateUsage(q, snap));
   },
 
   async generateContent(_giftId: string, _style: string): Promise<ProviderCallResult<ContentPiece[]>> {
@@ -155,4 +157,12 @@ function pickGifts(q: GiftQuery): Gift[] {
   return [...pool]
     .sort((a, b) => b.match_score - a.match_score)
     .slice(0, 3);
+}
+
+/* mock 计量估算：让 ai-metering 在 mock 层真实触发（阶段三切真实 Provider 后由平台计费替代） */
+function estimateUsage(query: GiftQuery, snap: RecommendationSnapshot): AIUsage {
+  return {
+    prompt_tokens: tokensFor(JSON.stringify(query)),
+    completion_tokens: tokensFor(JSON.stringify(snap.gifts))
+  } as AIUsage;
 }

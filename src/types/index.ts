@@ -119,13 +119,16 @@ export interface AIMemory {
   updated_at: number;
 }
 
-/* ProviderCallResult（必须与 @rockcent/platform/ai 对齐，便于阶段二切换） */
+/* ProviderCallResult（单一真源，必须与 @rockcent/platform/ai 对齐，便于阶段二切换）
+ * 注意：utils/trace.ts 与 platform/adapter.ts 均引用此处，禁止再定义第二份（宪法 §6）。
+ */
 export interface ProviderCallResult<T> {
   ok: boolean;
   data: T | null;
   error: { code: string; message: string } | null;
   usage?: { prompt_tokens: number; completion_tokens: number };
-  trace_id: string;
+  cost?: { amount: number; currency: string };
+  traceId: string;
 }
 
 export type AskResult =

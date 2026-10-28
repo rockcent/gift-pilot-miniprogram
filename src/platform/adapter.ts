@@ -35,15 +35,10 @@ import {
   getClientDeviceId,
   getClientDeviceLabel
 } from '@rockcent/platform/web-client';
+import type { ProviderCallResult } from '../types';
+export type { ProviderCallResult };
 
-export interface ProviderCallResult<T> {
-  ok: boolean;
-  data: T | null;
-  error: { code: string; message: string } | null;
-  usage?: AIUsage;
-  cost?: { amount: number; currency: string };
-  traceId: string;
-}
+/* ProviderCallResult<T> 单一真源见 ../types（与 @rockcent/platform/ai 对齐），已在此文件顶部 import + re-export。 */
 
 /* ---------- 1. AI Gateway ---------- */
 
@@ -219,12 +214,16 @@ export function clearLocalNamespace(): void {
 export function okResult<T>(data: T, usage?: AIUsage, cost?: number): ProviderCallResult<T> {
   const traceId = `trace_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
   if (usage) {
-    recordTokenUsage({
-      provider: 'mock-ark',
-      model: 'doubao-1-5-pro-32k-250115',
-      feature: 'gift_pilot_call',
-      usage
-    });
+    try {
+      recordTokenUsage({
+        provider: 'mock-ark',
+        model: 'doubao-1-5-pro-32k-250115',
+        feature: 'gift_pilot_call',
+        usage
+      });
+    } catch {
+      /* mock：计量为 best-effort，非浏览器环境（如 jest node）静默跳过，不影响主流程 */
+    }
   }
   return {
     ok: true,

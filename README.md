@@ -158,6 +158,16 @@ pnpm run check:no-sensitive        # 敏感信息扫描
 - 跨文件架构 / 平台 pin / 支付 / 数据库 → Codex 主导
 - 提交信息使用 `feat: / fix: / chore: / docs: / refactor: / test:` 前缀
 
+## 合规加固 v1.2（2026-07-30）
+
+代码审查后修复的宪法 §4 / §6 不变量（详见 `.specify/features/v1-2-compliance-hardening/`）：
+- **F2**：`ProviderCallResult<T>` 单一真源收敛到 `src/types/index.ts`（`traceId` + `cost?`），`utils/trace.ts` 改为重导出，`platform/adapter.ts` 删除重复定义。阶段三切换真实 Provider 不再类型错配。
+- **F1**：`wechat-pay.create` 接入 `assertOrderAmountMatch`（§4.3），金额不一致返回 `AMOUNT_MISMATCH`。
+- **F5**：支付订单落 `content_id` / `recommendation_id`（§4.5 归因）。
+- **F4**：`create` 接受 `idempotencyKey` 并做模块级去重。
+- **F3**：新增 `completeRefund` → `REFUNDED`（§4.2 退款终态）。
+- **计量**：`ai/mock.recommend` 传入估算 `usage`，mock 层 ai-metering 真实触发（`platform/adapter.okResult` 内 `recordTokenUsage` 已加 `try/catch` 保护）。
+
 ## License
 
 内部使用。
